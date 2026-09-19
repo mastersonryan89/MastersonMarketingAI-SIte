@@ -13,6 +13,7 @@ Work on a branch.
 | `styles.css` | The one stylesheet. Colour and type tokens are at the top. |
 | `assets/` | Web-ready images, icons, and self-hosted fonts |
 | `_headers` | Security and cache headers |
+| `wrangler.jsonc` | Worker config: name `autumn-union-b85a`, assets served from the repo root |
 | `.assetsignore` | Files that must never be served (all `.md`, `source/`, dotfiles) |
 | `source/` | Raw logos and old page versions. Never served. |
 

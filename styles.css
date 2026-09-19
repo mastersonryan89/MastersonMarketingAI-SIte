@@ -406,7 +406,7 @@ a:hover { text-decoration-thickness: 2px; }
   border-top: 3px solid var(--ink);
   padding-top: 1.5rem;
 }
-.route h2 { font-size: var(--t-35); }
+.route h2, .route h3 { font-size: var(--t-35); }
 .route p { max-width: 44ch; }
 .route .go {
   font-family: var(--display);
