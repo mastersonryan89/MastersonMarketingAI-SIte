@@ -1,0 +1,3 @@
+# The GitHub repo is public. Keep internal and client-confidential files out of it.
+SITE_BRIEF*.md
+source/client/

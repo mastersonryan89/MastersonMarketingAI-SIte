@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Masterson Marketing &amp; AI Solutions — No lead goes unanswered</title>
+<meta name="description" content="Masterson Marketing builds lead-capture systems for central Ohio home service businesses — so no call, form, or text ever goes unanswered.">
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:title" content="No lead goes unanswered — Masterson Marketing &amp; AI Solutions">
+<meta property="og:description" content="Every call, form, and text answered in under a minute. For central Ohio home service businesses.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#16202E;
+  --ink-soft:#1E2B3D;
+  --ink-line:#2A3A50;
+  --off:#F4EFE8;
+  --white:#FFFFFF;
+  --blue:#2F80ED;
+  --sky:#4A9EE0;
+  --sky-soft:#8FC4EC;
+  --amber:#F0A93B;
+  --gray:#9B958C;
+  --f:"Poppins",system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--off);color:var(--ink);font-family:var(--f);font-weight:300;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{width:min(1140px,90vw);margin:0 auto}
+a{color:inherit}
+strong,b{font-weight:600}
+
+/* nav */
+nav{background:var(--ink);padding:20px 0}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+nav img{height:34px;width:auto;display:block}
+.nav-cta{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.nav-tel{color:var(--sky-soft);text-decoration:none;font-size:15px;font-weight:400}
+.nav-tel:hover{color:var(--white)}
+
+/* buttons */
+.btn{display:inline-block;font-weight:600;font-size:16px;padding:15px 30px;border-radius:999px;text-decoration:none;transition:transform .14s ease,background .18s ease,box-shadow .18s ease;border:1.5px solid transparent}
+.btn-blue{background:var(--blue);color:var(--white);box-shadow:0 8px 22px rgba(47,128,237,.28)}
+.btn-blue:hover{transform:translateY(-2px);background:#3C8BF2}
+.btn-line{border-color:var(--ink-line);color:var(--off)}
+.btn-line:hover{border-color:var(--sky);color:var(--sky)}
+.btn-ink{background:var(--ink);color:var(--off)}
+.btn-ink:hover{transform:translateY(-2px);background:var(--ink-soft)}
+
+/* hero */
+.hero{background:var(--ink);color:var(--off);padding:74px 0 96px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;width:620px;height:620px;right:-190px;top:-230px;border-radius:50%;background:radial-gradient(circle,rgba(74,158,224,.20),transparent 68%)}
+.hero .wrap{position:relative}
+.hgrid{display:grid;grid-template-columns:1.02fr .98fr;gap:60px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:9px;background:rgba(74,158,224,.14);border:1px solid rgba(74,158,224,.34);color:var(--sky-soft);border-radius:999px;padding:8px 17px;font-size:13.5px;font-weight:400;margin:0 0 26px}
+.pill i{width:7px;height:7px;border-radius:50%;background:var(--sky);font-style:normal}
+h1{font-weight:700;font-size:clamp(38px,5.2vw,60px);line-height:1.06;letter-spacing:-.022em;margin:0 0 22px}
+h1 span{color:var(--sky)}
+.lede{font-size:19px;color:#C3D2E0;font-weight:300;max-width:46ch;margin:0 0 32px}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.micro{font-size:14px;color:var(--gray);margin:20px 0 0;font-weight:300}
+
+/* ticket card */
+.card{background:var(--white);color:var(--ink);border-radius:20px;box-shadow:0 26px 60px rgba(0,0,0,.36);overflow:hidden}
+.card-head{background:var(--off);padding:15px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid #E4DCD1;font-size:13px;color:#6B6F76;font-weight:400}
+.live{display:inline-flex;align-items:center;gap:8px;font-weight:500;color:var(--ink)}
+.live i{width:8px;height:8px;border-radius:50%;background:var(--sky);font-style:normal;box-shadow:0 0 0 4px rgba(74,158,224,.20)}
+.rows{padding:6px 0}
+.r{display:grid;grid-template-columns:74px 1fr;gap:14px;padding:14px 22px;border-bottom:1px solid #EFE9E1}
+.r:last-child{border-bottom:0}
+.tm{font-size:13px;color:var(--gray);font-weight:400;padding-top:2px}
+.ev{font-size:15px;line-height:1.5;font-weight:300}
+.ev b{font-weight:600;display:block;margin-bottom:2px}
+.chip{display:inline-block;font-size:11.5px;font-weight:500;padding:3px 11px;border-radius:999px;margin-left:8px;vertical-align:1px}
+.c-miss{background:#FBE9E9;color:#B5453F}
+.c-fast{background:#E7F1FD;color:var(--blue)}
+.c-won{background:#EAF4EC;color:#31794C}
+.msg{border-radius:13px;padding:11px 15px;margin-top:9px;font-size:14.5px;line-height:1.5}
+.msg.out{background:#EFF5FD;border:1px solid #DCE9F9}
+.msg.in{background:var(--off);border:1px solid #E7DFD4}
+.card-foot{background:var(--off);padding:14px 22px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13.5px;color:#6B6F76;border-top:1px solid #E4DCD1}
+.card-foot b{color:var(--ink);font-weight:600}
+.rv{opacity:0;transform:translateY(10px);animation:rise .55s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.rv{animation:none;opacity:1;transform:none}}
+
+/* stat band */
+.band{background:var(--white);padding:0}
+.band .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.stat{padding:44px 34px;border-right:1px solid #ECE5DC}
+.stat:last-child{border-right:0}
+.stat .n{font-size:40px;font-weight:700;color:var(--blue);line-height:1;letter-spacing:-.02em}
+.stat .n.sky{color:var(--sky)}
+.stat .n.amb{color:var(--amber)}
+.stat p{margin:11px 0 0;font-size:15.5px;color:#4A5563;font-weight:300}
+
+/* sections */
+section{padding:88px 0}
+.tag{display:inline-block;font-size:13px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--sky);margin:0 0 14px}
+h2{font-weight:700;font-size:clamp(30px,3.9vw,44px);line-height:1.12;letter-spacing:-.02em;margin:0 0 20px}
+h2 span{color:var(--blue)}
+.two{display:grid;grid-template-columns:1fr 1.05fr;gap:64px;align-items:start}
+.two p{max-width:52ch}
+
+.steps{display:grid;gap:14px}
+.step{background:var(--white);border-radius:16px;padding:22px 24px;display:grid;grid-template-columns:44px 1fr;gap:18px;align-items:start;transition:transform .16s ease,box-shadow .16s ease}
+.step:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(22,32,46,.09)}
+.ic{width:44px;height:44px;border-radius:13px;background:#EAF2FD;display:flex;align-items:center;justify-content:center}
+.ic svg{width:21px;height:21px}
+.step h3{margin:0 0 4px;font-size:18px;font-weight:600;letter-spacing:-.01em}
+.step p{margin:0;font-size:15.5px;color:#5A646F;font-weight:300}
+
+/* guarantee */
+.dark{background:var(--ink);color:var(--off);position:relative;overflow:hidden}
+.dark::before{content:"";position:absolute;width:540px;height:540px;left:-200px;bottom:-260px;border-radius:50%;background:radial-gradient(circle,rgba(74,158,224,.16),transparent 68%)}
+.dark .wrap{position:relative}
+.dark h2 span{color:var(--sky)}
+.gwrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.gcard{background:rgba(74,158,224,.09);border:1px solid rgba(74,158,224,.26);border-radius:20px;padding:34px}
+.gbig{font-size:56px;font-weight:700;color:var(--sky);line-height:1;letter-spacing:-.03em}
+.gcard p{color:#C3D2E0;font-weight:300;margin:14px 0 0}
+.fine{font-size:13.5px;color:var(--gray);line-height:1.75;margin-top:26px;max-width:62ch;font-weight:300}
+
+/* video */
+.slot{background:var(--white);border:1.5px dashed #DDD5CA;border-radius:20px;padding:64px 28px;text-align:center}
+.slot b{display:block;font-size:20px;font-weight:600;margin-bottom:7px}
+.slot span{font-size:14.5px;color:var(--gray)}
+
+/* contact */
+.cgrid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:start}
+.big{font-size:clamp(26px,3.4vw,38px);font-weight:700;letter-spacing:-.02em;text-decoration:none;display:block;line-height:1.2;margin-bottom:8px}
+.big:hover{color:var(--blue)}
+.em{font-size:clamp(17px,2vw,21px);font-weight:400;text-decoration:none;color:var(--blue);word-break:break-all}
+.em:hover{text-decoration:underline}
+.info{background:var(--white);border-radius:18px;padding:28px 30px;font-size:15px;color:#5A646F;font-weight:300;line-height:1.85}
+.info strong{display:block;color:var(--ink);margin-bottom:4px}
+.info hr{border:0;border-top:1px solid #ECE5DC;margin:18px 0}
+
+footer{background:var(--ink);color:var(--gray);padding:38px 0;font-size:14px;font-weight:300}
+footer .wrap{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
+footer img{height:26px;opacity:.9}
+footer a{color:var(--sky-soft);text-decoration:none;margin-left:20px}
+footer a:hover{color:var(--white)}
+
+
+/* logo lockup — pure CSS, no image dependency */
+.lockup{display:inline-flex;align-items:center;gap:11px;text-decoration:none}
+.bars{display:flex;align-items:flex-end;gap:3.5px;height:26px}
+.bars i{display:block;width:7px;border-radius:99px}
+.bars i:nth-child(1){height:14px;background:var(--sky)}
+.bars i:nth-child(2){height:20px;background:var(--blue)}
+.bars i:nth-child(3){height:26px;background:var(--amber)}
+.lk-txt{display:flex;flex-direction:column;line-height:1}
+.lk-name{font-weight:700;font-size:20px;letter-spacing:.055em;color:var(--off)}
+.lk-sub{font-weight:400;font-size:8px;letter-spacing:.17em;color:var(--sky);margin-top:4px}
+.lockup.sm .bars{height:21px}
+.lockup.sm .bars i{width:5.5px}
+.lockup.sm .bars i:nth-child(1){height:11px}
+.lockup.sm .bars i:nth-child(2){height:16px}
+.lockup.sm .bars i:nth-child(3){height:21px}
+.lockup.sm .lk-name{font-size:16px}
+.lockup.sm .lk-sub{font-size:7px;margin-top:3px}
+
+/* pricing tiers */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
+.tier{background:var(--white);border-radius:20px;padding:32px 28px;border:1.5px solid transparent;display:flex;flex-direction:column;height:100%}
+.tier.feature{border-color:var(--blue);box-shadow:0 18px 44px rgba(47,128,237,.14);position:relative}
+.tier-flag{position:absolute;top:-13px;left:28px;background:var(--blue);color:#fff;font-size:12px;font-weight:600;padding:5px 15px;border-radius:99px}
+.tier h3{margin:0 0 4px;font-size:21px;font-weight:600;letter-spacing:-.01em}
+.tier .who{margin:0 0 20px;font-size:14.5px;color:var(--gray);font-weight:300;min-height:42px}
+.price{display:flex;align-items:baseline;gap:7px;margin-bottom:4px}
+.price .amt{font-size:38px;font-weight:700;letter-spacing:-.025em;color:var(--ink)}
+.price .per{font-size:15px;color:var(--gray);font-weight:300}
+.setup{font-size:13.5px;color:var(--gray);font-weight:300;margin:0 0 22px;padding-bottom:22px;border-bottom:1px solid #EFE9E1}
+.tier ul{list-style:none;margin:0 0 26px;padding:0;flex:1}
+.tier li{position:relative;padding-left:26px;margin-bottom:11px;font-size:15px;font-weight:300;color:#4A5563;line-height:1.5}
+.tier li::before{content:"";position:absolute;left:0;top:7px;width:14px;height:14px;border-radius:50%;background:#E7F1FD}
+.tier li::after{content:"";position:absolute;left:4.5px;top:10.5px;width:5px;height:3px;border-left:1.6px solid var(--blue);border-bottom:1.6px solid var(--blue);transform:rotate(-45deg)}
+.tier li.plus{font-weight:500;color:var(--ink)}
+.tier li.plus::before{background:#FDF0DC}
+.tier li.plus::after{border-color:var(--amber)}
+.tier .btn{width:100%;text-align:center}
+.tier-note{text-align:center;font-size:14.5px;color:var(--gray);font-weight:300;margin:30px auto 0;max-width:60ch}
+@media(max-width:900px){.tiers{grid-template-columns:1fr}}
+
+a:focus-visible,.btn:focus-visible{outline:3px solid var(--sky);outline-offset:3px}
+
+@media(max-width:900px){
+  .hgrid,.two,.gwrap,.cgrid{grid-template-columns:1fr;gap:38px}
+  .band .wrap{grid-template-columns:1fr}
+  .stat{border-right:0;border-bottom:1px solid #ECE5DC;padding:30px 4px}
+  .stat:last-child{border-bottom:0}
+  section{padding:60px 0}
+  .hero{padding:52px 0 66px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="lockup" href="index.html" aria-label="Masterson Marketing and AI Solutions">
+      <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="lk-txt"><span class="lk-name">MASTERSON</span><span class="lk-sub">MARKETING &amp; AI SOLUTIONS</span></span>
+    </a>
+    <div class="nav-cta">
+      <a class="nav-tel" href="tel:+16145800923">614-580-0923</a>
+      <a class="btn btn-blue" href="https://calendly.com/ryan-mastersonmarketingai/30min" target="_blank" rel="noopener" style="padding:12px 24px;font-size:15px">Book a call</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hgrid">
+    <div>
+      <p class="pill"><i></i>Central Ohio home service businesses</p>
+      <h1>No call, form, or text <span>ever goes unanswered.</span></h1>
+      <p class="lede">We plug into the tools you already use, answer every lead in under a minute, and follow up automatically until they book. You don't change how you work — you just stop losing jobs.</p>
+      <div class="cta-row">
+        <a class="btn btn-blue" href="https://calendly.com/ryan-mastersonmarketingai/30min" target="_blank" rel="noopener">Book a call</a>
+        <a class="btn btn-line" href="tel:+16145800923">Or call me directly</a>
+      </div>
+      <p class="micro">One person. Local. Month to month, cancel anytime.</p>
+    </div>
+
+    <div class="card" aria-label="Example of a recovered missed call">
+      <div class="card-head">
+        <span class="live"><i></i>Live job ticket</span>
+        <span>Tue · 12:41 PM</span>
+      </div>
+      <div class="rows">
+        <div class="r rv" style="animation-delay:.05s">
+          <div class="tm">12:41:03</div>
+          <div class="ev"><b>Inbound call — no answer</b>Crew on site, nobody at the desk<span class="chip c-miss">Missed</span></div>
+        </div>
+        <div class="r rv" style="animation-delay:.35s">
+          <div class="tm">12:41:18</div>
+          <div class="ev"><b>Text sent automatically<span class="chip c-fast">15 seconds</span></b>
+            <div class="msg out">Sorry we missed you — this is [Your Company]. What's going on? Reply STOP to opt out.</div>
+          </div>
+        </div>
+        <div class="r rv" style="animation-delay:.7s">
+          <div class="tm">12:42:06</div>
+          <div class="ev"><b>Customer replied</b>
+            <div class="msg in">water heater leaking in the basement, hilliard</div>
+          </div>
+        </div>
+        <div class="r rv" style="animation-delay:1.05s">
+          <div class="tm">12:42:11</div>
+          <div class="ev"><b>Qualified and offered times</b>Today 3:30 PM or tomorrow 8:00 AM</div>
+        </div>
+        <div class="r rv" style="animation-delay:1.4s">
+          <div class="tm">12:43:29</div>
+          <div class="ev"><b>Booked on the calendar</b>Confirmation and reminder sent<span class="chip c-won">Job won</span></div>
+        </div>
+      </div>
+      <div class="card-foot">
+        <span>Total time: <b>2 min 26 sec</b></span>
+        <span>Nobody touched a phone</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="band">
+  <div class="wrap">
+    <div class="stat"><div class="n">Under 60 sec</div><p>Every lead gets a response, day or night — that's the whole product.</p></div>
+    <div class="stat"><div class="n sky">1 in 4</div><p>Calls a busy shop misses on a normal week. Lunch, evenings, and mid-job.</p></div>
+    <div class="stat"><div class="n amb">Most</div><p>Callers never leave a voicemail. They just dial the next company down the list.</p></div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap two">
+    <div>
+      <p class="tag">The problem</p>
+      <h2>It isn't leads.<br><span>It's the phone.</span></h2>
+      <p>You're not short on people who want the work done. You're short on hours, and the phone rings while you're under a sink, on a roof, or driving between jobs.</p>
+      <p>The caller doesn't leave a message and doesn't try again later. They scroll down, call the next company, and you never find out it happened.</p>
+      <p>That's the whole problem. It's a fixable one.</p>
+    </div>
+    <div>
+      <p class="tag">What gets installed</p>
+      <div class="steps">
+        <div class="step">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2F80ED" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2h4l2 5-3 2a13 13 0 0 0 6 6l2-3 5 2Z"/></svg></div>
+          <div><h3>Missed call, text back</h3><p>Fifteen seconds, day or night, on the number you already use.</p></div>
+        </div>
+        <div class="step">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2F80ED" stroke-width="2" stroke-linecap="round"><path d="M21 12a8 8 0 0 1-11.5 7.2L3 21l1.8-6.5A8 8 0 1 1 21 12Z"/></svg></div>
+          <div><h3>It asks the right questions</h3><p>What's wrong, where they are, how urgent. It never quotes a price.</p></div>
+        </div>
+        <div class="step">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2F80ED" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 11h18M9 16l2 2 4-4"/></svg></div>
+          <div><h3>It books the job</h3><p>Straight onto your calendar, with a reminder so they actually show.</p></div>
+        </div>
+        <div class="step">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2F80ED" stroke-width="2" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.3.9-4.5 4.3 1 6.2-5.5-2.9-5.5 2.9 1-6.2L3 9.5l6.3-.9Z"/></svg></div>
+          <div><h3>It asks for the review</h3><p>After the job's done, automatically. Your rating climbs on its own.</p></div>
+        </div>
+        <div class="step">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2F80ED" stroke-width="2" stroke-linecap="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></div>
+          <div><h3>You see all of it</h3><p>Every conversation on your phone. One page a month showing what it caught.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="dark">
+  <div class="wrap">
+    <p class="tag">The guarantee</p>
+    <div class="gwrap">
+      <div>
+        <h2>Answered in 60 seconds,<br><span>or the month is free.</span></h2>
+        <p style="color:#C3D2E0;max-width:48ch">In any month with ten or more leads, at least 95% of them get a response within 60 seconds during business hours — or you don't pay for that month.</p>
+        <p style="color:#C3D2E0;max-width:48ch">I send you the number every month whether you ask for it or not.</p>
+      </div>
+      <div class="gcard">
+        <div class="gbig">95%</div>
+        <p>of your leads answered inside a minute, reported to you monthly — in writing, good months and bad.</p>
+      </div>
+    </div>
+    <p class="fine">Guaranteed hours are 8:00 AM to 9:00 PM local, seven days a week. Leads arriving outside those hours get a response by 8:15 the next morning. Live within 10 business days of signing or your setup fee is refunded — carrier approval for text messaging is set by the phone carriers and can add a few days.</p>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <p class="tag">Where it goes from here</p>
+    <h2 style="margin-bottom:12px">Start with the phone.<br><span>Add the rest when you're ready.</span></h2>
+    <p style="max-width:56ch;margin-bottom:44px">Most shops start at the first tier and stay there a while. That's fine — it's the piece that pays for itself fastest. When you want more, it's the same system with more turned on.</p>
+
+    <div class="tiers">
+
+      <div class="tier feature">
+        <span class="tier-flag">Start here</span>
+        <h3>Never Miss a Lead</h3>
+        <p class="who">For the shop that's losing jobs to voicemail.</p>
+        <div class="price"><span class="amt">$497</span><span class="per">/ month</span></div>
+        <p class="setup">$500 one-time setup</p>
+        <ul>
+          <li>Missed call texted back in 15 seconds, 24/7</li>
+          <li>AI qualifies the caller and books the job</li>
+          <li>AI answers the phone after hours</li>
+          <li>Website chat that books appointments</li>
+          <li>Automatic review requests after every job</li>
+          <li>Every conversation on your phone</li>
+          <li>One-page monthly report</li>
+        </ul>
+        <a class="btn btn-blue" href="https://calendly.com/ryan-mastersonmarketingai/30min" target="_blank" rel="noopener">Book a call</a>
+      </div>
+
+      <div class="tier">
+        <h3>Growth Engine</h3>
+        <p class="who">For the shop that wants more calls coming in, not just answered.</p>
+        <div class="price"><span class="amt">$1,500</span><span class="per">/ month</span></div>
+        <p class="setup">$1,000 one-time setup · ad budget separate</p>
+        <ul>
+          <li class="plus">Everything in Never Miss a Lead</li>
+          <li>Managed advertising on one platform</li>
+          <li>Two landing pages built and maintained</li>
+          <li>12–16 social posts a month</li>
+          <li>Review responses written for your approval</li>
+          <li>Follow-up campaigns for leads that go quiet</li>
+        </ul>
+        <a class="btn btn-line" style="border-color:#DDD5CA;color:var(--ink)" href="#start">Talk it through</a>
+      </div>
+
+      <div class="tier">
+        <h3>Full Marketing Department</h3>
+        <p class="who">For the shop that's done thinking about marketing at all.</p>
+        <div class="price"><span class="amt">$2,500</span><span class="per">/ month and up</span></div>
+        <p class="setup">$1,500 one-time setup · ad budget separate</p>
+        <ul>
+          <li class="plus">Everything in Growth Engine</li>
+          <li>Advertising on two platforms</li>
+          <li>Four landing pages</li>
+          <li>Weekly content, including short video</li>
+          <li>Campaigns to your existing customer list</li>
+          <li>Google Business Profile managed</li>
+          <li>Quarterly strategy call</li>
+        </ul>
+        <a class="btn btn-line" style="border-color:#DDD5CA;color:var(--ink)" href="#start">Talk it through</a>
+      </div>
+
+    </div>
+
+    <p class="tier-note">Texting, call minutes, and AI usage are billed by the platform at cost — usually $25 to $80 a month depending on your call volume. Advertising budget is paid by you directly to Google or Meta. I never mark either one up.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="tag">See it work</p>
+    <h2 style="margin-bottom:30px">Three minutes, <span>no pitch.</span></h2>
+    <div class="slot">
+      <b>Demo video goes here</b>
+      <span>Replace this block with your Loom embed code.</span>
+    </div>
+  </div>
+</section>
+
+<section id="start" style="padding-top:20px">
+  <div class="wrap cgrid">
+    <div>
+      <p class="tag">Start here</p>
+      <h2 style="margin-bottom:28px">Twenty minutes.<br><span>Then you decide.</span></h2>
+      <a class="big" href="tel:+16145800923">614-580-0923</a>
+      <a class="em" href="mailto:Ryan@MastersonMarketingAI.com">Ryan@MastersonMarketingAI.com</a>
+      <p style="margin-top:28px"><a class="btn btn-ink" href="https://calendly.com/ryan-mastersonmarketingai/30min" target="_blank" rel="noopener">Pick a time</a></p>
+    </div>
+    <div class="info">
+      <strong>Ryan Masterson · Founder</strong>
+      Masterson Marketing &amp; AI Solutions<br>
+      569 S Roys Ave, Columbus, OH 43204
+      <hr>
+      Serving Columbus and central Ohio.<br>
+      Month to month — cancel with 30 days notice.<br>
+      Your data is yours: full export, free, if you leave.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a class="lockup sm" href="index.html" aria-label="Masterson Marketing and AI Solutions">
+      <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="lk-txt"><span class="lk-name">MASTERSON</span><span class="lk-sub">MARKETING &amp; AI SOLUTIONS</span></span>
+    </a>
+    <div>
+      © 2026 Masterson Marketing &amp; AI Solutions LLC
+      <a href="privacy.html">Privacy</a><a href="terms.html">Terms</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
