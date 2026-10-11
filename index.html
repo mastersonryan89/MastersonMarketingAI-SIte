@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<!--
+=====================================================================
+README: THINGS TO REPLACE BEFORE LAUNCH
+=====================================================================
+1. CONTACT EMAIL   Search "hello@mastersonmarketingai.com" (form action,
+                   mailto fallback, JS) and swap in the real address.
+2. PHONE           Search "[PHONE]" (contact + footer). Delete if unwanted.
+3. REEL EMBED      Section #creative. Replace the <div class="reel-slot">
+                   with a <video> or YouTube/Vimeo <iframe>. Example is in
+                   the comment right above it.
+4. DRONE MEDIA     Section #drone. Replace "[ DRONE REEL / PHOTO ]" slot.
+                   Also fill in "[ FAA PART 107 / INSURANCE ]" with real,
+                   verified details or delete that line.
+5. CLIENT LOGOS    "[ CLIENT LOGOS ]" strip: swap each [CLIENT NAME] block
+                   for a real <img alt="Client name"> (use loading="lazy").
+6. STATS           "[X%]" / "[CLIENT NAME]" results placeholders. Only fill
+                   with real numbers you can back up.
+7. FORM BACKEND    Search "TODO(form-backend)". The form currently opens
+                   the visitor's mail app via mailto:. Connect Formspree,
+                   Netlify Forms, or your own endpoint there.
+8. SEO/SOCIAL      Add an og:image and favicon when you have them.
+
+Stack: one file, no build. GSAP 3.12.5 + ScrollTrigger from cdnjs.
+Fonts: Anton, JetBrains Mono, Inter (Google Fonts).
+Content is fully visible with JS off or prefers-reduced-motion on.
+=====================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Masterson Marketing &amp; AI Solutions | Your new marketing team</title>
+<meta name="description" content="Masterson Marketing &amp; AI Solutions LLC in Columbus, Ohio. Meta and Google ads, SEO, nonprofit grant writing, curriculum, video production and drone filming. AI does the heavy lifting; a person reviews all work.">
+<meta property="og:title" content="Masterson Marketing &amp; AI Solutions">
+<meta property="og:description" content="Your new marketing team. We do the work of a whole team, with AI doing the heavy lifting.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mastersonmarketingai.com/">
+<meta name="theme-color" content="#EDEDE6">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230A0A0A'/%3E%3Crect x='6' y='6' width='12' height='12' fill='%23FF4F00'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script>
+  // Gate all "hidden until animated" styles behind .js so no-JS users see everything.
+  (function () {
+    var d = document.documentElement;
+    d.classList.add('js');
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('reduced');
+  })();
+</script>
+<style>
+:root{
+  --bg:#EDEDE6; --ink:#0A0A0A; --acc:#FF4F00;
+  --line:3px; --thin:2px;
+  --pad:clamp(16px,3vw,40px);
+  --bar:64px;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --disp:'Anton','Impact','Arial Narrow Bold',sans-serif;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--bar) + 8px)}
+html.reduced{scroll-behavior:auto}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:1.0625rem;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3,p,ul,ol,figure{margin:0}
+ul,ol{padding:0;list-style:none}
+::selection{background:var(--acc);color:var(--ink)}
+
+/* ---------- focus ---------- */
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;box-shadow:0 0 0 6px var(--acc)}
+.dark :focus-visible{outline-color:var(--acc);box-shadow:0 0 0 6px var(--ink)}
+.skip{position:absolute;left:var(--pad);top:-100px;background:var(--acc);color:var(--ink);padding:12px 16px;border:var(--line) solid var(--ink);font:700 .85rem var(--mono);z-index:100;text-decoration:none}
+.skip:focus{top:8px}
+
+/* ---------- shared type ---------- */
+.mono{font-family:var(--mono);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;line-height:1.4}
+.disp{font-family:var(--disp);font-weight:400;text-transform:uppercase;line-height:.92;letter-spacing:-.005em}
+.h2{font-size:clamp(2.6rem,7vw,6.5rem)}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding-bottom:clamp(16px,2.4vw,28px);flex-wrap:wrap}
+.sec-head+.rule{margin-bottom:clamp(24px,4vw,56px)}
+.tag{display:inline-block;background:var(--ink);color:var(--bg);padding:3px 8px}
+.dark .tag{background:var(--acc);color:var(--ink)}
+
+/* ---------- frame + grid ---------- */
+.frame{max-width:1440px;margin:0 auto;border-inline:var(--line) solid var(--ink);background:var(--bg);position:relative}
+section{position:relative;border-bottom:var(--line) solid var(--ink);padding:clamp(40px,6vw,96px) var(--pad)}
+.dark{background:var(--ink);color:var(--bg)}
+.dark a{color:var(--bg)}
+/* decorative vertical grid lines, used inside sections */
+.vlines{position:absolute;inset:0;pointer-events:none;display:grid;grid-template-columns:repeat(6,1fr);z-index:0}
+.vlines i{border-left:1px solid rgba(10,10,10,.22);transform-origin:top}
+.vlines i:first-child{border-left:0}
+.dark .vlines i{border-left-color:rgba(237,237,230,.18)}
+.section-in{position:relative;z-index:1}
+.rule{height:var(--line);background:var(--ink);transform-origin:left}
+.dark .rule{background:var(--bg)}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-block;font:700 .95rem var(--mono);letter-spacing:.06em;text-transform:uppercase;text-decoration:none;
+  background:var(--acc);color:var(--ink);border:var(--line) solid var(--ink);padding:16px 26px;border-radius:0;cursor:pointer;
+  box-shadow:6px 6px 0 var(--ink);transition:transform .12s steps(2),box-shadow .12s steps(2),background .12s steps(2),color .12s steps(2)}
+.btn:hover{background:var(--ink);color:var(--acc);transform:translate(6px,6px);box-shadow:0 0 0 var(--ink)}
+.btn:active{transform:translate(6px,6px)}
+.dark .btn{border-color:var(--bg);box-shadow:6px 6px 0 var(--bg)}
+.dark .btn:hover{background:var(--bg);color:var(--ink);box-shadow:0 0 0 var(--bg)}
+.link{font:700 .9rem var(--mono);letter-spacing:.06em;text-transform:uppercase;text-decoration:none;border-bottom:var(--line) solid var(--ink);padding-bottom:2px;display:inline-block}
+.link:hover{background:var(--ink);color:var(--bg)}
+.dark .link{border-color:var(--acc)}
+.dark .link:hover{background:var(--acc);color:var(--ink)}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:var(--line) solid var(--ink)}
+.topbar-in{max-width:1440px;margin:0 auto;height:var(--bar);padding:0 var(--pad);display:flex;align-items:center;justify-content:space-between;gap:16px;border-inline:var(--line) solid var(--ink)}
+.wordmark{font:400 1.35rem/1 var(--disp);text-transform:uppercase;text-decoration:none;letter-spacing:.01em;display:flex;align-items:center;gap:10px;white-space:nowrap}
+.wordmark b{display:inline-block;width:14px;height:14px;background:var(--acc);border:2px solid var(--ink)}
+.nav ul{display:flex;gap:6px}
+.nav a{display:block;font:700 .8rem var(--mono);letter-spacing:.06em;text-transform:uppercase;text-decoration:none;padding:8px 12px;border:var(--thin) solid transparent}
+.nav a:hover{border-color:var(--ink);background:var(--ink);color:var(--bg)}
+.nav a.cta{background:var(--acc);border-color:var(--ink)}
+.nav a.cta:hover{background:var(--ink);color:var(--acc)}
+.menu-btn{display:none;font:700 .8rem var(--mono);letter-spacing:.06em;text-transform:uppercase;background:var(--bg);color:var(--ink);border:var(--line) solid var(--ink);padding:8px 14px;border-radius:0;cursor:pointer;box-shadow:3px 3px 0 var(--ink)}
+.menu-btn[aria-expanded="true"]{background:var(--ink);color:var(--bg);box-shadow:none}
+@media (max-width:820px){
+  .wordmark{font-size:1.05rem}
+  .js .menu-btn{display:block}
+  .js .nav{position:absolute;left:0;right:0;top:100%;background:var(--bg);border-bottom:var(--line) solid var(--ink);display:none}
+  .js .nav.open{display:block}
+  .js .nav ul{flex-direction:column;gap:0}
+  .js .nav a{padding:18px var(--pad);border:0;border-top:var(--thin) solid var(--ink);font-size:.95rem}
+  /* no-JS: nav wraps under the wordmark instead of collapsing */
+  html:not(.js) .topbar-in{height:auto;flex-wrap:wrap;padding-block:10px}
+  html:not(.js) .nav ul{flex-wrap:wrap}
+}
+@media (max-width:420px){.wordmark{font-size:.92rem}.wordmark b{width:11px;height:11px}}
+
+/* ---------- 01 hero ---------- */
+.hero{padding-bottom:0}
+.hero-meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:clamp(16px,3vw,40px)}
+.hero h1{font-size:clamp(3.3rem,10.6vw,11rem);line-height:.88;margin-bottom:clamp(28px,4vw,56px)}
+.hero h1 .ln{display:block}
+.hero h1 .ln:first-child{position:relative;z-index:1}
+.hero h1 .acc{background:var(--acc);padding:0 .08em;margin-left:-.04em}
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.06em;margin-bottom:-.06em}
+.wi{display:inline-block;will-change:transform}
+.hero-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:0;border-top:var(--line) solid var(--ink);margin-inline:calc(var(--pad) * -1)}
+.hero-block{grid-column:1 / span 7;background:var(--acc);border-right:var(--line) solid var(--ink);padding:var(--pad);display:flex;flex-direction:column;justify-content:space-between;gap:28px}
+.hero-block ul li{font:400 clamp(1.4rem,2.6vw,2.4rem)/1.15 var(--disp);text-transform:uppercase;border-bottom:var(--thin) solid var(--ink);padding:6px 0}
+.hero-block ul li:last-child{border-bottom:0}
+.hero-side{grid-column:8 / span 5;padding:var(--pad);display:flex;flex-direction:column;gap:28px;justify-content:flex-start}
+.hero-side p{max-width:34ch;font-size:1.1rem}
+.hero-side .lead strong{font-weight:600}
+.hero-cta{display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+@media (max-width:820px){
+  .hero h1{font-size:17vw}
+  .hero-block,.hero-side{grid-column:1 / -1}
+  .hero-block{border-right:0;border-bottom:var(--line) solid var(--ink);min-height:0}
+}
+
+/* ---------- stats ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:var(--line) solid var(--ink)}
+.stat{padding:clamp(16px,2.4vw,32px) var(--pad);border-right:var(--line) solid var(--ink)}
+.stat:last-child{border-right:0}
+.stat .n{font:400 clamp(3rem,7vw,6rem)/1 var(--disp);display:block}
+.stat .mono{display:block;margin-top:8px}
+@media (max-width:820px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(2){border-right:0}
+  .stat:nth-child(-n+2){border-bottom:var(--line) solid var(--ink)}
+}
+
+/* ---------- logos strip ---------- */
+.logos{display:grid;grid-template-columns:200px 1fr;border-bottom:var(--line) solid var(--ink);align-items:stretch}
+.logos>.mono{padding:20px var(--pad);border-right:var(--line) solid var(--ink);display:flex;align-items:center}
+.logos ul{display:grid;grid-template-columns:repeat(4,1fr)}
+.logos li{padding:22px 12px;text-align:center;border-right:var(--thin) dashed var(--ink);font:700 .75rem var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.logos li:last-child{border-right:0}
+@media (max-width:820px){
+  .logos{grid-template-columns:1fr}
+  .logos>.mono{border-right:0;border-bottom:var(--line) solid var(--ink)}
+  .logos ul{grid-template-columns:repeat(2,1fr)}
+  .logos li:nth-child(2){border-right:0}
+  .logos li:nth-child(-n+2){border-bottom:var(--thin) dashed var(--ink)}
+}
+
+/* ---------- 02 services ---------- */
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.cell{display:block}
+.card{height:100%;display:flex;flex-direction:column;gap:14px;background:var(--bg);border:var(--line) solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:22px;transition:transform .12s steps(2),box-shadow .12s steps(2)}
+.card:hover{transform:translate(8px,8px);box-shadow:0 0 0 var(--ink)}
+.card .idx{display:flex;justify-content:space-between;align-items:baseline}
+.card .idx b{font:400 3.4rem/1 var(--disp)}
+.card h3{font:400 clamp(1.7rem,2.3vw,2.2rem)/1 var(--disp);text-transform:uppercase}
+.card p{font-size:.98rem;flex:1}
+.card .foot{border-top:var(--thin) solid var(--ink);padding-top:10px;color:var(--ink)}
+.card.cta{background:var(--acc)}
+.card.cta .btn{align-self:flex-start;background:var(--ink);color:var(--acc)}
+.card.cta .btn:hover{background:var(--bg);color:var(--ink)}
+@media (max-width:1100px){.svc-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.svc-grid{grid-template-columns:1fr;gap:24px}}
+
+/* ---------- 03 process (stacks on scroll) ---------- */
+.steps{display:grid;gap:0}
+.step{background:var(--bg);border:var(--line) solid var(--ink);display:grid;grid-template-columns:minmax(120px,22%) 1fr minmax(0,38%);margin-bottom:-3px}
+.step .num{border-right:var(--line) solid var(--ink);padding:20px;display:flex;flex-direction:column;justify-content:space-between;gap:16px}
+.step:nth-child(2) .num{background:var(--acc)}
+.step .num b{font:400 clamp(4rem,9vw,8rem)/.85 var(--disp)}
+.step .body{padding:24px;display:flex;flex-direction:column;gap:16px;justify-content:center}
+.step h3{font:400 clamp(2.4rem,6vw,5.5rem)/.9 var(--disp);text-transform:uppercase}
+.step .body p{max-width:48ch}
+.step .split{border-left:var(--line) solid var(--ink);display:grid;grid-template-rows:1fr 1fr}
+.step .split div{padding:18px 20px;font-size:.95rem}
+.step .split div+div{border-top:var(--line) solid var(--ink);background:var(--ink);color:var(--bg)}
+.step .split .mono{display:block;margin-bottom:6px}
+.step .split div+div .mono{color:var(--acc)}
+@media (max-width:900px){
+  .step{grid-template-columns:1fr}
+  .step .num{border-right:0;border-bottom:var(--line) solid var(--ink);flex-direction:row;align-items:center}
+  .step .split{border-left:0;border-top:var(--line) solid var(--ink)}
+}
+@media (min-width:901px) and (min-height:700px){
+  .step{position:sticky;box-shadow:0 -8px 0 var(--bg)}
+  .step:nth-child(1){top:calc(var(--bar) + 8px)}
+  .step:nth-child(2){top:calc(var(--bar) + 40px)}
+  .step:nth-child(3){top:calc(var(--bar) + 72px)}
+  .steps{padding-bottom:0}
+}
+.honest{margin-top:clamp(32px,5vw,64px);border:var(--line) solid var(--ink);background:var(--acc);padding:20px 24px;box-shadow:8px 8px 0 var(--ink);display:flex;gap:20px;align-items:baseline;flex-wrap:wrap}
+.honest p{font-weight:600;max-width:70ch}
+
+/* ---------- 04 reel ---------- */
+.reel{background:var(--bg)}
+.reel-frame{border:var(--line) solid var(--ink);box-shadow:12px 12px 0 var(--ink);background:var(--bg);margin-right:12px}
+.reel-bar{display:flex;justify-content:space-between;gap:12px;padding:10px 14px;border-bottom:var(--line) solid var(--ink);background:var(--ink);color:var(--bg)}
+.reel-slot{position:relative;aspect-ratio:16/9;background:var(--bg);display:grid;place-items:center;overflow:hidden}
+.reel-slot svg{position:absolute;inset:0;width:100%;height:100%}
+.reel-label{position:relative;background:var(--acc);border:var(--line) solid var(--ink);padding:14px 22px;text-align:center;box-shadow:6px 6px 0 var(--ink)}
+.reel-label b{display:block;font:400 clamp(1.4rem,3.4vw,3rem)/1 var(--disp);text-transform:uppercase}
+.reel-note{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:28px}
+
+/* ---------- 05 nonprofit ---------- */
+.np-top{display:grid;grid-template-columns:7fr 5fr;gap:clamp(20px,4vw,64px);align-items:end;margin-bottom:clamp(28px,5vw,64px)}
+.np-top p{font-size:1.15rem;max-width:44ch}
+.np-grid{display:grid;grid-template-columns:repeat(3,1fr);border:var(--line) solid var(--bg)}
+.np-item{padding:24px;border-right:var(--line) solid var(--bg);display:flex;flex-direction:column;gap:14px}
+.np-item:last-child{border-right:0}
+.np-item h3{font:400 clamp(1.8rem,3vw,2.6rem)/1 var(--disp);text-transform:uppercase;color:var(--acc)}
+.np-item ul{margin-top:auto;border-top:var(--thin) solid var(--bg);padding-top:12px}
+.np-item li{font:400 .78rem var(--mono);text-transform:uppercase;letter-spacing:.05em;padding:3px 0}
+.np-item li::before{content:"+ ";color:var(--acc)}
+.np-foot{margin-top:32px;display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+@media (max-width:900px){
+  .np-top{grid-template-columns:1fr;align-items:start}
+  .np-grid{grid-template-columns:1fr}
+  .np-item{border-right:0;border-bottom:var(--line) solid var(--bg)}
+  .np-item:last-child{border-bottom:0}
+}
+
+/* ---------- 06 drone ---------- */
+.drone-grid{display:grid;grid-template-columns:5fr 7fr;gap:clamp(20px,4vw,56px);align-items:stretch}
+.drone-copy{display:flex;flex-direction:column;gap:22px}
+.drone-copy p{max-width:46ch}
+.uses{border:var(--line) solid var(--ink)}
+.uses li{display:flex;justify-content:space-between;gap:16px;padding:12px 16px;border-bottom:var(--thin) solid var(--ink);font:700 .85rem var(--mono);text-transform:uppercase;letter-spacing:.05em}
+.uses li:last-child{border-bottom:0}
+.uses li span:last-child{color:var(--ink);opacity:.7;font-weight:400}
+.drone-slot{border:var(--line) solid var(--ink);box-shadow:10px 10px 0 var(--ink);margin:0 10px 10px 0;min-height:320px;position:relative;background:var(--bg);display:grid;place-items:center;overflow:hidden}
+.drone-slot svg{position:absolute;inset:0;width:100%;height:100%}
+.drone-slot .reel-label{margin:20px}
+@media (max-width:900px){.drone-grid{grid-template-columns:1fr}}
+
+/* ---------- 07 contact ---------- */
+.contact h2{font-size:clamp(3rem,10vw,10rem);line-height:.88;margin-bottom:clamp(28px,4vw,56px)}
+.contact h2 em{font-style:normal;color:var(--acc)}
+.contact-grid{display:grid;grid-template-columns:5fr 7fr;gap:clamp(24px,5vw,72px)}
+.contact-copy{display:flex;flex-direction:column;gap:20px}
+.contact-copy p{max-width:40ch}
+.details{border-top:var(--line) solid var(--bg)}
+.details li{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:var(--thin) solid var(--bg)}
+.details a{text-decoration:none;border-bottom:var(--thin) solid var(--acc)}
+.details a:hover{background:var(--acc);color:var(--ink)}
+form{background:var(--bg);color:var(--ink);border:var(--line) solid var(--bg);box-shadow:10px 10px 0 var(--acc);padding:clamp(18px,3vw,32px);display:grid;gap:18px;margin:0 10px 10px 0}
+.field{display:grid;gap:6px}
+.field label{font:700 .75rem var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.field input,.field select,.field textarea{font:400 1rem var(--sans);color:var(--ink);background:#fff;border:var(--line) solid var(--ink);border-radius:0;padding:12px 14px;width:100%;appearance:none;-webkit-appearance:none}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='10'%3E%3Cpath d='M0 0h16L8 10z' fill='%230A0A0A'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
+.field textarea{min-height:140px;resize:vertical}
+form :focus-visible{outline:3px solid var(--ink);box-shadow:0 0 0 6px var(--acc)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.form-foot{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.form-foot .mono{flex:1;min-width:200px}
+.form-foot a{font-weight:700}
+#status{min-height:1.4em}
+@media (max-width:900px){.contact-grid{grid-template-columns:1fr}.row2{grid-template-columns:1fr}}
+
+/* ---------- footer ---------- */
+footer{padding:28px var(--pad);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;background:var(--bg)}
+footer .mono{font-size:.75rem}
+
+/* ---------- motion start states (only when JS runs and motion is allowed) ---------- */
+.js:not(.reduced) .wi{transform:translateY(112%)}
+.js:not(.reduced) .rule,.js:not(.reduced) .draw-x{transform:scaleX(0)}
+.js:not(.reduced) .vlines i{transform:scaleY(0)}
+.js:not(.reduced) [data-wipe]{clip-path:inset(0 100% 0 0)}
+.js:not(.reduced) .card{opacity:0}
+.js:not(.reduced) [data-rise]{opacity:0;transform:translateY(28px)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="wordmark" href="#top" aria-label="Masterson Marketing and AI, home"><b aria-hidden="true"></b>Masterson Marketing &amp; AI</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav">Menu [+]</button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#nonprofits">Nonprofits</a></li>
+        <li><a href="#creative">Creative</a></li>
+        <li><a class="cta" href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="frame" id="top">
+<main id="main">
+
+  <!-- 01 HERO -->
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="vlines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="section-in">
+      <div class="hero-meta mono">
+        <span data-type>Masterson Marketing &amp; AI Solutions LLC</span>
+        <span data-type>[ 01 / 07 ] &mdash; Columbus, Ohio</span>
+      </div>
+
+      <h1 id="hero-h" class="disp" data-split>
+        <span class="ln">Your new</span>
+        <span class="ln"><span class="acc">marketing</span> team.</span>
+      </h1>
+
+      <div class="hero-grid">
+        <div class="hero-block" data-wipe>
+          <span class="mono tag" style="align-self:flex-start;background:var(--ink);color:var(--bg)" data-type>[ What the team covers ]</span>
+          <ul aria-label="What we cover">
+            <li>Ads &amp; search</li>
+            <li>Grants &amp; curriculum</li>
+            <li>Video &amp; audio</li>
+            <li>Drone footage</li>
+          </ul>
+        </div>
+        <div class="hero-side">
+          <p class="lead"><strong>Masterson Marketing &amp; AI Solutions</strong> does the work of a whole team, with AI doing the heavy lifting. A person reviews everything before it ships.</p>
+          <div class="hero-cta" data-rise>
+            <a class="btn" href="#contact">Start a project</a>
+            <a class="link" href="#services">See services &darr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS: only facts about how the business works. No invented results. -->
+  <div class="stats" role="list" aria-label="At a glance">
+    <div class="stat" role="listitem"><span class="n"><span data-count="7">7</span></span><span class="mono">Services under one roof</span></div>
+    <div class="stat" role="listitem"><span class="n"><span data-count="3">3</span></span><span class="mono">Steps: brief, build, ship</span></div>
+    <div class="stat" role="listitem"><span class="n"><span data-count="100">100</span>%</span><span class="mono">Of work reviewed by a person</span></div>
+    <div class="stat" role="listitem"><span class="n">[X%]</span><span class="mono">[ Placeholder: add a real client result ]</span></div>
+  </div>
+
+  <div class="logos">
+    <p class="mono">[ CLIENT LOGOS ]</p>
+    <ul aria-label="Client logo placeholders">
+      <!-- Replace each li with <img src="..." alt="Client name" loading="lazy" width="" height=""> -->
+      <li>[CLIENT NAME]</li><li>[CLIENT NAME]</li><li>[CLIENT NAME]</li><li>[CLIENT NAME]</li>
+    </ul>
+  </div>
+
+  <!-- 02 SERVICES -->
+  <section id="services" aria-labelledby="svc-h">
+    <div class="vlines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="section-in">
+      <div class="sec-head">
+        <h2 id="svc-h" class="disp h2" data-split>Seven ways<br>we work</h2>
+        <p class="mono" data-type>[ 02 / 07 ] &mdash; [ Services ]</p>
+      </div>
+      <ul class="svc-grid">
+        <li class="cell"><article class="card">
+          <div class="idx"><b>01</b><span class="mono">[ Service ]</span></div>
+          <h3>Meta Ads</h3>
+          <p>We build and run your Facebook and Instagram campaigns, from the creative to the audience setup. AI drafts the ad variations; a person picks what runs and watches the numbers.</p>
+          <p class="mono foot">Facebook / Instagram / Paid social</p>
+        </article></li>
+        <li class="cell"><article class="card">
+          <div class="idx"><b>02</b><span class="mono">[ Service ]</span></div>
+          <h3>Google Ads</h3>
+          <p>We set up search, display, and performance campaigns around what people type when they are ready to buy. AI helps with keyword research and ad copy; a person owns the budget and the bidding.</p>
+          <p class="mono foot">Search / Display / Performance</p>
+        </article></li>
+        <li class="cell"><article class="card">
+          <div class="idx"><b>03</b><span class="mono">[ Service ]</span></div>
+          <h3>SEO</h3>
+          <p>We find what keeps your site off the first page and plan content people really search for. AI speeds up the research and first drafts; a person edits everything before it is published.</p>
+          <p class="mono foot">Search visibility / Content strategy</p>
+        </article></li>
+        <li class="cell"><article class="card">
+          <div class="idx"><b>04</b><span class="mono">[ Service ]</span></div>
+          <h3>Nonprofit Grant Writing &amp; Discovery</h3>
+          <p>We find grants your organization qualifies for, then write the applications. AI does the searching and first drafts; a person reviews every line before it is submitted.</p>
+          <p class="mono foot">Grant discovery / Grant writing</p>
+        </article></li>
+        <li class="cell"><article class="card">
+          <div class="idx"><b>05</b><span class="mono">[ Service ]</span></div>
+          <h3>Curriculum Writing</h3>
+          <p>We write program and youth curricula: lesson plans, activities, and facilitator guides. AI builds the first pass; a person checks it for age fit and accuracy.</p>
+          <p class="mono foot">Program curricula / Youth curricula</p>
+        </article></li>
+        <li class="cell"><article class="card">
+          <div class="idx"><b>06</b><span class="mono">[ Service ]</span></div>
+          <h3>Creative Ad Production</h3>
+          <p>We film, edit video, and clean up audio for your ads. One team handles the shoot through the final cut, so nothing gets lost between vendors.</p>
+          <p class="mono foot">Filming / Video editing / Audio editing</p>
+        </article></li>
+        <li class="cell"><article class="card">
+          <div class="idx"><b>07</b><span class="mono">[ Service ]</span></div>
+          <h3>Drone Filming</h3>
+          <p>We capture aerial footage for ads, events, and real estate. It gets edited to drop straight into your campaign or listing.</p>
+          <p class="mono foot">Ads / Events / Real estate</p>
+        </article></li>
+        <li class="cell"><article class="card cta">
+          <div class="idx"><b>+</b><span class="mono">[ Not sure? ]</span></div>
+          <h3>Tell us what you need</h3>
+          <p>Most projects mix two or three of these. Send a few lines and we will tell you what makes sense.</p>
+          <a class="btn" href="#contact">Start a project</a>
+        </article></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 03 PROCESS -->
+  <section class="dark" id="process" aria-labelledby="proc-h">
+    <div class="vlines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="section-in">
+      <div class="sec-head">
+        <h2 id="proc-h" class="disp h2" data-split>How the<br>AI team works</h2>
+        <p class="mono" data-type>[ 03 / 07 ] &mdash; [ Process ]</p>
+      </div>
+      <ol class="steps" style="color:var(--ink)">
+        <li class="step">
+          <div class="num"><span class="mono">[ Step ]</span><b>01</b></div>
+          <div class="body"><h3>Brief</h3><p>You tell us the goal, the budget, and what is off limits. We turn that into a written plan you can read and correct before any work starts.</p></div>
+          <div class="split">
+            <div><span class="mono">AI does</span>Summarizes what you send us and researches your market and competitors.</div>
+            <div><span class="mono">A person does</span>Reads the plan, fixes what is wrong, and signs off with you.</div>
+          </div>
+        </li>
+        <li class="step">
+          <div class="num"><span class="mono">[ Step ]</span><b>02</b></div>
+          <div class="body"><h3>Build</h3><p>Ad copy, keyword lists, grant language, rough cuts. This is where the AI does the bulk of the typing and sorting, so the humans can spend time on judgment.</p></div>
+          <div class="split">
+            <div><span class="mono">AI does</span>Produces first drafts and options, fast.</div>
+            <div><span class="mono">A person does</span>Rewrites, fact-checks, and throws out whatever is not good enough.</div>
+          </div>
+        </li>
+        <li class="step">
+          <div class="num"><span class="mono">[ Step ]</span><b>03</b></div>
+          <div class="body"><h3>Ship</h3><p>We launch, then keep watching. Campaigns get adjusted, applications get submitted, and finished video and audio get delivered.</p></div>
+          <div class="split">
+            <div><span class="mono">AI does</span>Flags changes in performance and drafts report summaries.</div>
+            <div><span class="mono">A person does</span>Reviews everything before it goes live and reads every report before you see it.</div>
+          </div>
+        </li>
+      </ol>
+      <div class="honest" style="color:var(--ink)" data-rise>
+        <span class="mono">[ Straight talk ]</span>
+        <p>AI is a tool we use, not a replacement for judgment. A person reviews all work before it reaches you or goes public.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 REEL -->
+  <section class="reel" id="creative" aria-labelledby="reel-h">
+    <div class="vlines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="section-in">
+      <div class="sec-head">
+        <h2 id="reel-h" class="disp h2" data-split>Creative<br>reel</h2>
+        <p class="mono" data-type>[ 04 / 07 ] &mdash; [ Creative ]</p>
+      </div>
+      <figure class="reel-frame" data-reel>
+        <div class="reel-bar mono"><span>[ REEL / VIDEO EMBED ]</span><span>16:9 &mdash; Placeholder</span></div>
+        <!--
+          REPLACE THIS DIV with your reel. Examples:
+          <video controls preload="none" poster="reel-poster.jpg" playsinline><source src="reel.mp4" type="video/mp4"></video>
+          <iframe src="https://player.vimeo.com/video/ID" title="Masterson reel" loading="lazy" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+        -->
+        <div class="reel-slot" role="img" aria-label="Placeholder for the creative reel video. No video has been added yet.">
+          <svg viewBox="0 0 160 90" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <defs><pattern id="hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="1" height="4" fill="#0A0A0A" opacity=".12"/></pattern></defs>
+            <rect width="160" height="90" fill="url(#hatch)"/>
+            <path d="M0 0L160 90M160 0L0 90" stroke="#0A0A0A" stroke-width=".5" vector-effect="non-scaling-stroke"/>
+          </svg>
+          <div class="reel-label"><b>[ Reel / Video embed ]</b><span class="mono">Drop video here. Not a real video.</span></div>
+        </div>
+      </figure>
+      <div class="reel-note mono">
+        <span>[ Filming ] [ Video editing ] [ Audio editing ]</span>
+        <span>[ CLIENT NAME ] &mdash; [ PROJECT TYPE ] &mdash; [ YEAR ]</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 NONPROFITS -->
+  <section class="dark" id="nonprofits" aria-labelledby="np-h">
+    <div class="vlines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="section-in">
+      <div class="sec-head">
+        <p class="mono" data-type>[ 05 / 07 ] &mdash; [ Nonprofits ]</p>
+        <span class="mono tag">Grants &amp; programs</span>
+      </div>
+      <div class="np-top">
+        <h2 id="np-h" class="disp h2" data-split>Funding and programs for nonprofits</h2>
+        <p>Small teams lose weeks to grant research and application writing. We take that off your plate: find the right funders, write the applications, and build the program materials behind them.</p>
+      </div>
+      <div class="np-grid">
+        <div class="np-item" data-rise>
+          <span class="mono">[ A ]</span>
+          <h3>Grant discovery</h3>
+          <p>We search federal, state, foundation, and corporate funding and give you a short list of grants that fit your mission, size, and location, with deadlines.</p>
+          <ul><li>Fit check</li><li>Deadline calendar</li></ul>
+        </div>
+        <div class="np-item" data-rise>
+          <span class="mono">[ B ]</span>
+          <h3>Grant writing</h3>
+          <p>We draft narratives, budgets, and supporting sections in your organization&rsquo;s voice. AI produces the first draft; a person edits it and checks it against the funder&rsquo;s rules.</p>
+          <ul><li>Full applications</li><li>Reviewed before you sign</li></ul>
+        </div>
+        <div class="np-item" data-rise>
+          <span class="mono">[ C ]</span>
+          <h3>Program curriculum</h3>
+          <p>We write the lesson plans, activities, and facilitator guides behind your programs, including youth programs, so what you promise a funder matches what you teach.</p>
+          <ul><li>Youth &amp; program curricula</li><li>Facilitator guides</li></ul>
+        </div>
+      </div>
+      <div class="np-foot">
+        <a class="btn" href="#contact">Talk about a grant</a>
+        <span class="mono">[ Nonprofit pricing / sliding scale: add details here if offered ]</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 DRONE -->
+  <section id="drone" aria-labelledby="drone-h">
+    <div class="vlines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="section-in">
+      <div class="sec-head">
+        <h2 id="drone-h" class="disp h2" data-split>Aerial &amp;<br>on location</h2>
+        <p class="mono" data-type>[ 06 / 07 ] &mdash; [ Drone ]</p>
+      </div>
+      <div class="drone-grid">
+        <div class="drone-copy">
+          <p>Some shots only work from above. We fly, capture, and edit aerial footage for ads, events, and property listings, and we film on location when the story needs to happen where it happens.</p>
+          <ul class="uses" aria-label="Where aerial footage is used">
+            <li><span>Ads</span><span>Campaign video</span></li>
+            <li><span>Events</span><span>Coverage &amp; recaps</span></li>
+            <li><span>Real estate</span><span>Listings &amp; tours</span></li>
+          </ul>
+          <p class="mono">[ FAA PART 107 / INSURANCE: CONFIRM AND ADD DETAILS ]</p>
+          <a class="link" href="#contact" style="align-self:flex-start">Book a shoot &rarr;</a>
+        </div>
+        <figure class="drone-slot" data-wipe>
+          <svg viewBox="0 0 160 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <defs><pattern id="hatch2" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><rect width="1" height="4" fill="#0A0A0A" opacity=".12"/></pattern></defs>
+            <rect width="160" height="100" fill="url(#hatch2)"/>
+          </svg>
+          <div class="reel-label" role="img" aria-label="Placeholder for drone footage or photo. Nothing has been added yet."><b>[ Drone reel / photo ]</b><span class="mono">Placeholder. Replace with aerial footage.</span></div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 CONTACT -->
+  <section class="dark contact" id="contact" aria-labelledby="contact-h">
+    <div class="vlines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="section-in">
+      <div class="sec-head">
+        <p class="mono" data-type>[ 07 / 07 ] &mdash; [ Contact ]</p>
+      </div>
+      <h2 id="contact-h" class="disp" data-split>Tell us what<br>you need. <em>Now.</em></h2>
+      <div class="contact-grid">
+        <div class="contact-copy">
+          <p>Send a few lines about the project. A person reads every message and replies with next steps, not a sales sequence.</p>
+          <ul class="details mono">
+            <li><span>Email</span><a href="mailto:hello@mastersonmarketingai.com">hello@mastersonmarketingai.com</a></li>
+            <li><span>Phone</span><span>[PHONE]</span></li>
+            <li><span>Studio</span><span>Columbus, Ohio</span></li>
+          </ul>
+        </div>
+
+        <!-- TODO(form-backend): Connect a form handler here (Formspree, Netlify Forms, your own API).
+             Set the form's action/method, and remove the mailto handling in the script at the bottom of this file.
+             Without JS, the form falls back to mailto: via the action attribute. -->
+        <form id="contact-form" action="mailto:hello@mastersonmarketingai.com" method="post" enctype="text/plain" data-rise>
+          <div class="row2">
+            <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+            <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+          </div>
+          <div class="field">
+            <label for="f-type">Project type</label>
+            <select id="f-type" name="project_type" required>
+              <option value="" selected disabled>Choose one</option>
+              <option>Meta Ads</option>
+              <option>Google Ads</option>
+              <option>SEO</option>
+              <option>Nonprofit grant writing / discovery</option>
+              <option>Curriculum writing</option>
+              <option>Creative ad production</option>
+              <option>Drone filming</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+          <div class="field"><label for="f-msg">Message</label><textarea id="f-msg" name="message" required></textarea></div>
+          <div class="form-foot">
+            <button class="btn" type="submit">Send it</button>
+            <p class="mono" id="status" role="status" aria-live="polite">Or email <a href="mailto:hello@mastersonmarketingai.com">hello@mastersonmarketingai.com</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span class="mono">&copy; <span id="year">2026</span> Masterson Marketing &amp; AI Solutions LLC</span>
+  <span class="mono">Columbus, Ohio &mdash; [PHONE]</span>
+</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script defer>
+window.addEventListener('DOMContentLoaded', function () {
+  var root = document.documentElement;
+
+  /* ---- always-on bits (no GSAP needed) ---- */
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  var btn = document.querySelector('.menu-btn'), nav = document.getElementById('nav');
+  function setMenu(open){ nav.classList.toggle('open', open); btn.setAttribute('aria-expanded', open); btn.textContent = open ? 'Close [−]' : 'Menu [+]'; }
+  btn.addEventListener('click', function(){ setMenu(btn.getAttribute('aria-expanded') !== 'true'); });
+  nav.addEventListener('click', function(e){ if (e.target.closest('a')) setMenu(false); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') setMenu(false); });
+
+  var form = document.getElementById('contact-form'), status = document.getElementById('status');
+  form.addEventListener('submit', function (e) {
+    // TODO(form-backend): replace this mailto handoff with a fetch() to your form endpoint.
+    e.preventDefault();
+    var f = new FormData(form);
+    var body = 'Name: ' + f.get('name') + '\nEmail: ' + f.get('email') + '\nProject type: ' + f.get('project_type') + '\n\n' + f.get('message');
+    window.location.href = 'mailto:hello@mastersonmarketingai.com?subject=' + encodeURIComponent('Project inquiry: ' + f.get('project_type')) + '&body=' + encodeURIComponent(body);
+    status.textContent = 'Opening your email app. If nothing opens, email us directly at hello@mastersonmarketingai.com.';
+  });
+
+  /* ---- motion ---- */
+  if (root.classList.contains('reduced')) return;
+  if (!window.gsap || !window.ScrollTrigger) { root.classList.remove('js'); return; } // CDN failed: show everything
+
+  try {
+    gsap.registerPlugin(ScrollTrigger);
+    var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+    var STEP = function (n) { return 'steps(' + n + ')'; };
+
+    // Split headlines into masked words (line breaks preserved).
+    function split(el) {
+      var label = el.textContent.replace(/\s+/g, ' ').trim();
+      el.setAttribute('aria-label', label);
+      (function walk(node) {
+        Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+          if (n.nodeType === 3) {
+            var frag = document.createDocumentFragment();
+            n.textContent.split(/(\s+)/).forEach(function (t) {
+              if (!t) return;
+              if (/^\s+$/.test(t)) { frag.appendChild(document.createTextNode(' ')); return; }
+              var w = document.createElement('span'); w.className = 'w'; w.setAttribute('aria-hidden', 'true');
+              var i = document.createElement('span'); i.className = 'wi'; i.textContent = t;
+              w.appendChild(i); frag.appendChild(w);
+            });
+            n.parentNode.replaceChild(frag, n);
+          } else if (n.nodeType === 1 && n.tagName !== 'BR') walk(n);
+        });
+      })(el);
+    }
+    $$('[data-split]').forEach(split);
+
+    // Typewriter: reveals chars with stepped easing, keeps layout stable.
+    function prepType(el) {
+      var full = el.textContent; el._full = full;
+      var vis = document.createElement('span'), hid = document.createElement('span');
+      hid.style.visibility = 'hidden'; hid.textContent = full;
+      el.textContent = ''; el.appendChild(vis); el.appendChild(hid);
+      el._vis = vis; el._hid = hid;
+    }
+    function typeIn(el, delay) {
+      var len = el._full.length, o = { n: 0 };
+      return gsap.to(o, {
+        n: len, duration: Math.min(.9, len * .02), delay: delay || 0, ease: STEP(len),
+        onUpdate: function () { var k = Math.round(o.n); el._vis.textContent = el._full.slice(0, k); el._hid.textContent = el._full.slice(k); },
+        onComplete: function () { el.textContent = el._full; }
+      });
+    }
+    var types = $$('[data-type]'); types.forEach(prepType);
+
+    // Count-up numbers
+    var counts = $$('[data-count]');
+    counts.forEach(function (el) { el.textContent = '0'; });
+
+    // ----- LOAD SEQUENCE (hero) -----
+    var hero = $$('.hero')[0];
+    var tl = gsap.timeline({ defaults: { overwrite: 'auto' } });
+    tl.to('.topbar-in', { duration: .01 }, 0)
+      .to($$('.vlines i', hero), { scaleY: 1, duration: .8, stagger: .06, ease: STEP(8) }, 0)
+      .to($$('.hero h1 .wi'), { y: 0, duration: .7, stagger: .08, ease: 'expo.out' }, .15)
+      .add(function () { types.filter(function (t) { return hero.contains(t); }).forEach(function (t, i) { typeIn(t, i * .12); }); }, .1)
+      .to($$('.hero-block'), { clipPath: 'inset(0 0% 0 0)', duration: .6, ease: STEP(6) }, .6)
+      .to($$('.hero-cta'), { opacity: 1, y: 0, duration: .5, ease: STEP(5) }, .8)
+      .to($$('.stats, .logos'), { duration: .01 }, .9);
+
+    // Draw-in rules: add one under every section header + stats/logos borders
+    $$('section').forEach(function (s) {
+      var r = document.createElement('div'); r.className = 'rule'; r.setAttribute('aria-hidden', 'true');
+      var head = $$('.sec-head', s)[0];
+      if (head) head.parentNode.insertBefore(r, head.nextSibling);
+    });
+    $$('.rule').forEach(function (r) {
+      gsap.to(r, { scaleX: 1, duration: .9, ease: STEP(10), scrollTrigger: { trigger: r, start: 'top 92%', once: true } });
+    });
+
+    // Per-section triggers
+    $$('section:not(.hero)').forEach(function (s) {
+      var lines = $$('.vlines i', s);
+      gsap.to(lines, { scaleY: 1, duration: .8, stagger: .05, ease: STEP(8), scrollTrigger: { trigger: s, start: 'top 85%', once: true } });
+      var words = $$('[data-split] .wi', s);
+      if (words.length) gsap.to(words, { y: 0, duration: .65, stagger: .06, ease: 'expo.out', scrollTrigger: { trigger: words[0].closest('[data-split]'), start: 'top 88%', once: true } });
+    });
+    types.filter(function (t) { return !hero.contains(t); }).forEach(function (t) {
+      ScrollTrigger.create({ trigger: t, start: 'top 92%', once: true, onEnter: function () { typeIn(t); } });
+    });
+    $$('[data-wipe]').filter(function (el) { return !hero.contains(el); }).forEach(function (el) {
+      gsap.to(el, { clipPath: 'inset(0 0% 0 0)', duration: .7, ease: STEP(7), scrollTrigger: { trigger: el, start: 'top 85%', once: true } });
+    });
+    $$('[data-rise]').filter(function (el) { return !hero.contains(el); }).forEach(function (el, i) {
+      gsap.to(el, { opacity: 1, y: 0, duration: .5, ease: STEP(5), scrollTrigger: { trigger: el, start: 'top 90%', once: true } });
+    });
+
+    // Counters
+    counts.forEach(function (el) {
+      var end = +el.getAttribute('data-count'), o = { v: 0 };
+      ScrollTrigger.create({ trigger: el, start: 'top 92%', once: true, onEnter: function () {
+        gsap.to(o, { v: end, duration: 1, ease: STEP(12), onUpdate: function () { el.textContent = Math.round(o.v); }, onComplete: function () { el.textContent = end; } });
+      } });
+    });
+
+    // Service cards: stepped entrance on the card, scrubbed drift on the wrapper
+    $$('.svc-grid .cell').forEach(function (cell, i) {
+      var card = cell.firstElementChild, dir = (i % 2 === 0) ? 1 : -1;
+      gsap.fromTo(card, { opacity: 0, y: 36 }, { opacity: 1, y: 0, duration: .5, ease: STEP(5), delay: (i % 4) * .08,
+        scrollTrigger: { trigger: cell, start: 'top 92%', once: true } });
+    });
+    ScrollTrigger.matchMedia && ScrollTrigger.matchMedia({
+      '(min-width: 1101px)': function () {
+        $$('.svc-grid .cell').forEach(function (cell, i) {
+          var d = (i % 2 === 0) ? -22 : 22;
+          gsap.fromTo(cell, { y: -d }, { y: d, ease: 'none', scrollTrigger: { trigger: '.svc-grid', start: 'top bottom', end: 'bottom top', scrub: .4 } });
+        });
+      },
+      '(min-width: 641px) and (max-width: 1100px)': function () {
+        $$('.svc-grid .cell').forEach(function (cell, i) {
+          var d = (i % 2 === 0) ? -14 : 14;
+          gsap.fromTo(cell, { y: -d }, { y: d, ease: 'none', scrollTrigger: { trigger: '.svc-grid', start: 'top bottom', end: 'bottom top', scrub: .4 } });
+        });
+      }
+    });
+
+    // Reel frame "locks in": scales up to full width as it reaches centre of screen
+    var reel = $$('[data-reel]')[0];
+    if (reel) gsap.fromTo(reel, { scale: .9, transformOrigin: '50% 0%' }, { scale: 1, ease: 'none',
+      scrollTrigger: { trigger: reel, start: 'top 95%', end: 'top 40%', scrub: true } });
+
+    // Process steps: earlier steps dim slightly as the next one stacks on (sticky is CSS)
+    if (window.matchMedia('(min-width: 901px) and (min-height: 700px)').matches) {
+      var steps = $$('.step');
+      steps.forEach(function (st, i) {
+        if (i === steps.length - 1) return;
+        gsap.to(st, { scale: .97, ease: 'none', transformOrigin: '50% 0%',
+          scrollTrigger: { trigger: steps[i + 1], start: 'top 85%', end: 'top 25%', scrub: true } });
+      });
+    }
+
+    setTimeout(function () { ScrollTrigger.refresh(); }, 600);
+    window.addEventListener('load', function(){ ScrollTrigger.refresh(); });
+  } catch (err) {
+    console.error('Motion failed, showing static page', err);
+    root.classList.remove('js');
+    root.classList.add('reduced');
+  }
+});
+</script>
+<noscript><style>.menu-btn{display:none}</style></noscript>
+</body>
+</html>
