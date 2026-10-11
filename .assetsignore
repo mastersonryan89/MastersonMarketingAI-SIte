@@ -1,0 +1,21 @@
+# Files in the assets directory that must never be served.
+# Anything not listed here is uploaded and publicly fetchable at its path.
+
+# Internal documents — the brief contains the rate table
+*.md
+SITE_BRIEF*
+
+# Raw logo and source artwork
+source/
+logo-source/
+
+# Dotfiles and repo plumbing
+.*
+.git/
+.github/
+wrangler.jsonc
+wrangler.toml
+wrangler.json
+package.json
+package-lock.json
+node_modules/
