@@ -224,7 +224,7 @@ section{position:relative;padding:clamp(64px,9vw,136px) var(--pad);background:va
 
 /* ---------- 05 nonprofit ---------- */
 .np-lead{max-width:48ch;color:var(--mute);font-size:1.15rem;margin-bottom:clamp(36px,5vw,72px)}
-.np-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--hair)}
+.np-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--hair)}
 .np-item{padding:28px 28px 8px 0;display:flex;flex-direction:column;gap:12px}
 .np-item+.np-item{padding-left:28px;border-left:1px solid var(--hair)}
 .np-item h3{font:500 clamp(1.5rem,2.4vw,2rem)/1.1 var(--disp);letter-spacing:-.025em;color:var(--hl)}
@@ -234,9 +234,16 @@ section{position:relative;padding:clamp(64px,9vw,136px) var(--pad);background:va
 .np-item li::before{content:"+ ";color:var(--hl)}
 .np-foot{margin-top:40px;display:flex;gap:24px;align-items:center;flex-wrap:wrap}
 .np-foot .mono{color:var(--mute)}
+@media (max-width:1100px){
+  .np-grid{grid-template-columns:repeat(2,1fr)}
+  .np-item,.np-item+.np-item{padding:24px 24px 24px 0;border-left:0}
+  .np-item:nth-child(even){padding-left:24px;border-left:1px solid var(--hair)}
+  .np-item:nth-child(n+3){border-top:1px solid var(--hair)}
+}
 @media (max-width:900px){
   .np-grid{grid-template-columns:1fr}
-  .np-item,.np-item+.np-item{padding:24px 0;border-left:0;border-bottom:1px solid var(--hair)}
+  .np-item,.np-item+.np-item,.np-item:nth-child(even){padding:24px 0;border-left:0;border-bottom:1px solid var(--hair)}
+  .np-item:nth-child(n+3){border-top:0}
 }
 
 /* ---------- 06 drone ---------- */
@@ -495,7 +502,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <p class="mono" data-type>05 / 07 &nbsp; Nonprofits</p>
         <span class="rule" aria-hidden="true"></span>
       </div>
-      <p class="np-lead">Small teams lose weeks to grant research and application writing. We take that off your plate: find the right funders, write the applications, and build the program materials behind them.</p>
+      <p class="np-lead">Small teams lose weeks to grant research and application writing. We take that off your plate: find the right funders, write the applications, and build the program materials behind them. We also help you build lasting relationships with the donors and foundations in your area, because funders give to organizations they know and trust.</p>
       <div class="np-grid">
         <div class="np-item" data-rise>
           <span class="mono muted">A</span>
@@ -511,6 +518,12 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         </div>
         <div class="np-item" data-rise>
           <span class="mono muted">C</span>
+          <h3>Donor and foundation relationships</h3>
+          <p>We help you cultivate the funders near you: research who supports work like yours, prepare for introductions and meetings, and draft thank-you notes and progress updates. A person tracks the follow-ups so funders hear from you between applications.</p>
+          <ul><li>Local funder research</li><li>Meeting prep</li><li>Thank-yous and updates</li></ul>
+        </div>
+        <div class="np-item" data-rise>
+          <span class="mono muted">D</span>
           <h3>Program curriculum</h3>
           <p>We write the lesson plans, activities, and facilitator guides behind your programs, including youth programs, so what you promise a funder matches what you teach.</p>
           <ul><li>Youth and program curricula</li><li>Facilitator guides</li></ul>
