@@ -1,0 +1,9 @@
+{
+  // Static-assets Worker. The name must match the Worker connected in Workers Builds.
+  "name": "autumn-union-b85a",
+  "compatibility_date": "2026-09-18",
+  "assets": {
+    // The site lives at the repo root. .assetsignore keeps internal files from being served.
+    "directory": "./"
+  }
+}
