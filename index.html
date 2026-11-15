@@ -1,806 +1,205 @@
 <!DOCTYPE html>
-<!--
-=====================================================================
-README: THINGS TO REPLACE BEFORE LAUNCH
-=====================================================================
-1. CONTACT EMAIL   Search "hello@mastersonmarketingai.com" (form action,
-                   mailto fallback, JS) and swap in the real address.
-2. PHONE           Search "[PHONE]" (contact + footer). Delete if unwanted.
-3. REEL EMBED      Section #creative. Replace the <div class="reel-slot">
-                   with a <video> or YouTube/Vimeo <iframe>. Example is in
-                   the comment right above it.
-4. DRONE MEDIA     Section #creative (right column). Replace the aerial
-                   placeholder, and fill in or delete the
-                   "[ FAA PART 107 / INSURANCE ]" line.
-5. CLIENT LOGOS    "[ CLIENT LOGOS ]" strip: swap each [CLIENT NAME] block
-                   for a real <img alt="Client name"> (use loading="lazy").
-6. STATS           "[X%]" placeholder. Only fill with a real number you can
-                   back up.
-7. FORM BACKEND    Search "TODO(form-backend)". The form currently opens
-                   the visitor's mail app via mailto:. Connect Formspree,
-                   Netlify Forms, or your own endpoint there.
-8. SEO/SOCIAL      Add an og:image and favicon when you have them.
-
-Stack: one file, no build. GSAP 3.12.5 + ScrollTrigger from cdnjs.
-Fonts: Inter Tight, Inter, JetBrains Mono (Google Fonts).
-Content is fully visible with JS off or prefers-reduced-motion on.
-=====================================================================
--->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Masterson Marketing &amp; AI Solutions | Full-scale marketing for businesses and nonprofits</title>
-<meta name="description" content="Masterson Marketing &amp; AI Solutions LLC in Columbus, Ohio. Full-scale marketing for for-profit businesses and nonprofits: social media management, Meta and Google ads, SEO, ad creative, drone filming, grant writing and curriculum. AI does the heavy lifting; a person reviews all work.">
-<meta property="og:title" content="Masterson Marketing &amp; AI Solutions">
-<meta property="og:description" content="Full-scale marketing for businesses and nonprofits. We do the work of a whole team, with AI doing the heavy lifting.">
+<title>Masterson Marketing &amp; AI Solutions | Columbus, Ohio</title>
+<meta name="description" content="Full-scale marketing for businesses and nonprofits in Columbus, Ohio: social media, Meta and Google ads, SEO, ad creative, drone filming, grant writing, and curriculum. A person reviews all work.">
+<link rel="canonical" href="https://mastersonmarketingai.com/">
+<meta property="og:title" content="Masterson Marketing &amp; AI Solutions | Columbus, Ohio">
+<meta property="og:description" content="Full-scale marketing for businesses and nonprofits in Columbus, Ohio: social media, Meta and Google ads, SEO, ad creative, drone filming, grant writing, and curriculum. A person reviews all work.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mastersonmarketingai.com/">
-<meta name="theme-color" content="#0B121B">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230B121B'/%3E%3Cpath d='M8 24V8h16v16zM8 16h16M16 8v16' stroke='%2374A6E8' stroke-width='1.5' fill='none'/%3E%3C/svg%3E">
+<meta property="og:image" content="https://mastersonmarketingai.com/assets/img/og-logo.png">
+<meta name="theme-color" content="#16202E">
+<link rel="icon" type="image/png" href="/assets/img/icon.png">
+<link rel="apple-touch-icon" href="/assets/img/icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script>
-  // Gate all "hidden until animated" styles behind .js so no-JS users see everything.
   (function () {
-    var d = document.documentElement;
-    d.classList.add('js');
-    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('reduced');
+    var d = document.documentElement; d.classList.add('js');
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { d.classList.add('reduced'); return; }
+    d.classList.add('is-entering');
+    setTimeout(function () { d.classList.add('is-ready'); }, 2500); // never leave the curtain down
   })();
 </script>
-<style>
-:root{
-  --paper:#DCDFE1;         /* cool concrete */
-  --ink:#0B121B;           /* night glass */
-  --acc:#17479A;           /* deep glass blue */
-  --acc-l:#74A6E8;         /* same blue, lit, for dark floors */
-  --hair-l:rgba(11,18,27,.22);
-  --hair-d:rgba(220,223,225,.20);
-  --fg:var(--ink); --bg:var(--paper); --hair:var(--hair-l); --hl:var(--acc); --mute:rgba(11,18,27,.68);
-  --pad:clamp(20px,4vw,56px);
-  --bar:64px;
-  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  --disp:'Inter Tight','Inter',system-ui,sans-serif;
-  --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
-  --ease:cubic-bezier(.2,.7,.2,1);
-}
-*,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:calc(var(--bar) + 8px)}
-html.reduced{scroll-behavior:auto}
-body{margin:0;background:var(--ink);color:var(--fg);font-family:var(--sans);font-size:1.0625rem;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-a{color:inherit}
-h1,h2,h3,p,ul,ol,figure{margin:0}
-ul,ol{padding:0;list-style:none}
-::selection{background:var(--acc);color:#fff}
-
-:focus-visible{outline:2px solid var(--hl);outline-offset:4px}
-.skip{position:absolute;left:var(--pad);top:-100px;background:var(--acc);color:#fff;padding:12px 16px;font:500 .85rem var(--mono);z-index:100;text-decoration:none}
-.skip:focus{top:8px}
-
-/* ---------- type ---------- */
-.mono{font-family:var(--mono);font-size:.75rem;letter-spacing:.04em;line-height:1.5}
-.disp{font-family:var(--disp);font-weight:500;letter-spacing:-.035em;line-height:.98}
-.h2{font-size:clamp(2.4rem,5.6vw,5rem)}
-.muted{color:var(--mute)}
-
-/* ---------- floors (sections) ---------- */
-section{position:relative;padding:clamp(64px,9vw,136px) var(--pad);background:var(--bg);color:var(--fg)}
-.dark{--fg:#E6E9EB;--bg:var(--ink);--hair:var(--hair-d);--hl:var(--acc-l);--mute:rgba(230,233,235,.7)}
-.blue{--fg:#fff;--bg:var(--acc);--hair:rgba(255,255,255,.3);--hl:#D3E3FB;--mute:rgba(255,255,255,.84)}
-.wrap{max-width:1320px;margin:0 auto;position:relative}
-.sec-head{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:end;padding-bottom:clamp(20px,3vw,40px);margin-bottom:clamp(28px,4vw,56px);position:relative}
-.sec-head h2{grid-column:1 / span 9}
-.sec-head .mono{grid-column:10 / span 3;justify-self:end;text-align:right;color:var(--mute)}
-.rule{position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--hair);transform-origin:left}
-@media (max-width:820px){.sec-head h2{grid-column:1 / -1}.sec-head .mono{grid-column:1 / -1;justify-self:start;text-align:left;order:-1}}
-
-/* ---------- buttons ---------- */
-.btn{display:inline-block;font:500 .95rem var(--sans);letter-spacing:.01em;text-decoration:none;background:var(--hl);color:#fff;border:1px solid var(--hl);padding:15px 28px;border-radius:0;cursor:pointer;transition:background .25s var(--ease),color .25s var(--ease),transform .25s var(--ease)}
-.dark .btn{color:var(--ink)}
-.blue .btn{color:var(--acc)}
-.btn:hover{background:transparent;color:var(--hl)}
-.btn:active{transform:translateY(1px)}
-.link{font:500 .95rem var(--sans);text-decoration:none;display:inline-flex;gap:8px;align-items:center;border-bottom:1px solid currentColor;padding-bottom:2px;transition:color .25s var(--ease)}
-.link:hover{color:var(--hl)}
-
-/* ---------- top bar ---------- */
-.topbar{position:sticky;top:0;z-index:50;background:rgba(11,18,27,.96);color:#E6E9EB;border-bottom:1px solid var(--hair-d)}
-.topbar-in{max-width:1320px;margin:0 auto;height:var(--bar);padding:0 var(--pad);display:flex;align-items:center;justify-content:space-between;gap:16px}
-.wordmark{font:600 1.02rem/1 var(--disp);letter-spacing:.06em;text-transform:uppercase;text-decoration:none;display:flex;align-items:center;gap:12px;white-space:nowrap}
-.wordmark svg{width:20px;height:20px;stroke:var(--acc-l);fill:none;stroke-width:1.4}
-.nav ul{display:flex;gap:28px;align-items:center}
-.nav a{font:500 .9rem var(--sans);text-decoration:none;color:rgba(230,233,235,.8);transition:color .2s var(--ease)}
-.nav a:hover{color:#fff}
-.nav a.cta{border:1px solid var(--acc-l);color:var(--acc-l);padding:9px 18px;transition:background .25s var(--ease),color .25s var(--ease)}
-.nav a.cta:hover{background:var(--acc-l);color:var(--ink)}
-.menu-btn{display:none;font:500 .85rem var(--sans);background:transparent;color:#E6E9EB;border:1px solid var(--hair-d);padding:9px 16px;border-radius:0;cursor:pointer}
-@media (max-width:480px){.wordmark{font-size:.82rem;letter-spacing:.03em;gap:8px}.wordmark svg{width:16px;height:16px}.menu-btn{padding:8px 12px}}
-@media (max-width:820px){
-  .js .menu-btn{display:block}
-  .js .nav{position:absolute;left:0;right:0;top:100%;background:var(--ink);border-bottom:1px solid var(--hair-d);display:none}
-  .js .nav.open{display:block}
-  .js .nav ul{flex-direction:column;gap:0;align-items:stretch}
-  .js .nav a{display:block;padding:18px var(--pad);border-top:1px solid var(--hair-d);font-size:1rem}
-  .js .nav a.cta{border:0;border-top:1px solid var(--hair-d);color:var(--acc-l);padding:18px var(--pad)}
-  html:not(.js) .topbar-in{height:auto;flex-wrap:wrap;padding-block:12px}
-  html:not(.js) .nav ul{flex-wrap:wrap;gap:16px}
-}
-
-/* ---------- 01 hero ---------- */
-.hero{padding-top:clamp(28px,4vw,56px);padding-bottom:0;overflow:hidden}
-.hero-meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--mute);padding-bottom:20px;position:relative}
-.hero-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px;align-items:end}
-.hero-copy{grid-column:1 / span 8;padding:clamp(40px,7vw,104px) 0 clamp(40px,6vw,88px)}
-.hero h1{font-size:clamp(3.4rem,9vw,9.2rem);line-height:.92;letter-spacing:-.03em;color:#F2F4F5}
-.hero h1 .ln{display:block}
-.hero h1 em{font-style:normal;color:var(--acc-l)}
-.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
-.wi{display:inline-block;will-change:transform}
-.hero-lead{margin-top:clamp(28px,4vw,52px);display:flex;gap:28px 48px;align-items:flex-end;flex-wrap:wrap}
-.hero-lead p{max-width:40ch;font-size:1.15rem;color:rgba(230,233,235,.82)}
-.hero-lead strong{color:#fff;font-weight:600}
-.hero-cta{display:flex;align-items:center;gap:28px;flex-wrap:wrap}
-.elev-wrap{grid-column:9 / span 4;align-self:end}
-.elev{display:block;width:100%;height:auto;overflow:visible}
-.elev .fr{fill:none;stroke:#9AA7B5;stroke-width:1.1}
-.elev .slab{stroke:#C5CED8}
-.elev .col{stroke:#9AA7B5}
-.elev .brace{stroke:var(--acc-l);stroke-opacity:.85}
-.elev .ground{stroke:#E6E9EB}
-.elev .mast{stroke:#C5CED8}
-.elev .win{fill:var(--acc);fill-opacity:.55}
-.elev .draw{stroke-dasharray:1;stroke-dashoffset:0}
-@media (max-width:900px){
-  .hero-copy{grid-column:1 / -1;padding-bottom:20px}
-  .elev-wrap{grid-column:1 / -1;max-width:300px;margin-left:auto;margin-top:8px}
-  .hero h1{font-size:17.5vw}
-}
-
-/* ---------- stats ---------- */
-.stats{background:var(--paper);padding:0 var(--pad)}
-.stats-in{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--hair-l)}
-.stat{padding:clamp(28px,4vw,48px) 24px clamp(28px,4vw,48px) 0}
-.stat+.stat{padding-left:24px;border-left:1px solid var(--hair-l)}
-.stat .n{font:500 clamp(2.8rem,6vw,5rem)/1 var(--disp);letter-spacing:-.04em;display:block}
-.stat .mono{display:block;margin-top:10px;color:rgba(11,18,27,.68)}
-@media (max-width:820px){
-  .stats-in{grid-template-columns:repeat(2,1fr)}
-  .stat:nth-child(3){border-left:0;padding-left:0}
-  .stat:nth-child(n+3){border-top:1px solid var(--hair-l)}
-}
-.logos{background:var(--paper);padding:28px var(--pad) 0}
-.logos-in{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:200px 1fr;align-items:center;gap:20px;padding-bottom:28px}
-.logos .mono{color:rgba(11,18,27,.68)}
-.logos ul{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.logos li{border:1px dashed var(--hair-l);padding:18px 12px;text-align:center;font:400 .72rem var(--mono);letter-spacing:.04em;color:rgba(11,18,27,.68)}
-@media (max-width:820px){.logos-in{grid-template-columns:1fr}.logos ul{grid-template-columns:repeat(2,1fr)}}
-
-/* ---------- 02 services: editorial rows ---------- */
-.audience{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--hair);margin-bottom:clamp(40px,5vw,72px)}
-.audience>div{padding:24px 32px 24px 0}
-.audience>div+div{padding-left:32px;border-left:1px solid var(--hair)}
-.audience .mono{color:var(--hl);margin-bottom:8px;font-weight:500}
-.audience p:last-child{max-width:44ch;color:var(--mute)}
-.svc-list .grp{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:44px 0 14px}
-.svc-list .grp:first-child{padding-top:0}
-.svc-list .grp a{text-decoration:none;color:var(--hl);transition:color .2s var(--ease)}
-.svc-list .grp a:hover{color:var(--ink)}
-@media (max-width:820px){.audience{grid-template-columns:1fr}.audience>div,.audience>div+div{padding:20px 0;border-left:0}.audience>div+div{border-top:1px solid var(--hair)}.svc-list .grp{flex-direction:column;gap:6px}}
-.svc{display:grid;grid-template-columns:repeat(12,1fr);gap:8px 24px;padding:30px 0;border-top:1px solid var(--hair);align-items:start;position:relative;transition:padding .35s var(--ease)}
-.svc-list li:last-child .svc{border-bottom:1px solid var(--hair)}
-.svc .n{grid-column:1 / span 1;color:var(--mute);padding-top:.5em;transition:color .25s var(--ease)}
-.svc h3{grid-column:2 / span 4;font:500 clamp(1.5rem,2.4vw,2.1rem)/1.1 var(--disp);letter-spacing:-.025em}
-.svc p{grid-column:6 / span 4;color:var(--mute);font-size:1rem}
-.svc .tags{grid-column:10 / span 3;justify-self:end;text-align:right;color:var(--mute);padding-top:.5em}
-.svc:hover{padding-left:12px}
-.svc:hover .n{color:var(--hl)}
-.svc.cta h3{color:var(--hl)}
-.svc.cta .link{grid-column:10 / span 3;justify-self:end;color:var(--hl)}
-@media (max-width:900px){
-  .svc{grid-template-columns:48px 1fr;gap:6px 12px;padding:24px 0}
-  .svc h3,.svc p,.svc .tags,.svc.cta .link{grid-column:2 / -1;justify-self:start;text-align:left}
-  .svc .tags{padding-top:4px}
-}
-
-/* ---------- 03 process ---------- */
-.steps{display:grid;gap:0}
-.step{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;padding:36px 0;border-top:1px solid var(--hair);background:var(--bg)}
-.step .num{grid-column:1 / span 2;font:500 clamp(3.5rem,8vw,7rem)/.9 var(--disp);letter-spacing:-.05em;color:var(--hl)}
-.step .body{grid-column:3 / span 5}
-.step h3{font:500 clamp(2rem,4vw,3.4rem)/1 var(--disp);letter-spacing:-.035em;margin-bottom:14px}
-.step .body p{color:var(--mute);max-width:46ch}
-.step .split{grid-column:9 / span 4;display:grid;gap:18px;align-content:start}
-.step .split div{font-size:.95rem;padding-left:16px;border-left:1px solid var(--hair)}
-.step .split div:last-child{border-left-color:var(--hl)}
-.step .split .mono{display:block;margin-bottom:4px;color:var(--mute)}
-.step .split div:last-child .mono{color:var(--hl)}
-@media (max-width:900px){
-  .step{grid-template-columns:1fr;gap:14px;padding:28px 0}
-  .step .num,.step .body,.step .split{grid-column:1 / -1}
-}
-@media (min-width:901px) and (min-height:700px){
-  .step{position:sticky}
-  .step:nth-child(1){top:calc(var(--bar) + 0px)}
-  .step:nth-child(2){top:calc(var(--bar) + 28px)}
-  .step:nth-child(3){top:calc(var(--bar) + 56px)}
-}
-.honest{margin-top:clamp(36px,5vw,72px);max-width:62ch;font-size:1.05rem;padding-left:20px;border-left:2px solid var(--hl)}
-
-/* ---------- 04 reel ---------- */
-.reel-frame{border:1px solid rgba(11,18,27,.45);background:var(--ink)}
-.reel-slot{position:relative;aspect-ratio:16/9;display:grid;place-items:center;overflow:hidden;color:#E6E9EB}
-.reel-slot svg,.drone-slot svg{position:absolute;inset:0;width:100%;height:100%}
-.slot-label{position:relative;text-align:center;padding:16px 24px;border:1px solid var(--acc-l);background:rgba(11,18,27,.85)}
-.slot-label b{display:block;font:500 clamp(1.2rem,2.6vw,2rem)/1.1 var(--disp);letter-spacing:-.02em;margin-bottom:6px}
-.reel-note{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:40px;color:var(--mute)}
-
-/* ---------- 05 nonprofit ---------- */
-.np-lead{max-width:48ch;color:var(--mute);font-size:1.15rem;margin-bottom:clamp(36px,5vw,72px)}
-.np-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--hair)}
-.np-item{padding:28px 28px 8px 0;display:flex;flex-direction:column;gap:12px}
-.np-item+.np-item{padding-left:28px;border-left:1px solid var(--hair)}
-.np-item h3{font:500 clamp(1.5rem,2.4vw,2rem)/1.1 var(--disp);letter-spacing:-.025em;color:var(--hl)}
-.np-item p{color:var(--mute)}
-.np-item ul{margin-top:auto;padding-top:14px}
-.np-item li{font:400 .78rem var(--mono);color:var(--mute);padding:2px 0}
-.np-item li::before{content:"+ ";color:var(--hl)}
-.np-foot{margin-top:40px;display:flex;gap:24px;align-items:center;flex-wrap:wrap}
-.np-foot .mono{color:var(--mute)}
-@media (max-width:1100px){
-  .np-grid{grid-template-columns:repeat(2,1fr)}
-  .np-item,.np-item+.np-item{padding:24px 24px 24px 0;border-left:0}
-  .np-item:nth-child(even){padding-left:24px;border-left:1px solid var(--hair)}
-  .np-item:nth-child(n+3){border-top:1px solid var(--hair)}
-}
-@media (max-width:900px){
-  .np-grid{grid-template-columns:1fr}
-  .np-item,.np-item+.np-item,.np-item:nth-child(even){padding:24px 0;border-left:0;border-bottom:1px solid var(--hair)}
-  .np-item:nth-child(n+3){border-top:0}
-}
-
-/* ---------- 04 creative + aerial ---------- */
-.cr-lead{max-width:56ch;font-size:1.15rem;color:var(--mute);margin-bottom:clamp(32px,4vw,56px)}
-.cr-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px 32px;align-items:start}
-.cr-main{grid-column:1 / span 7}
-.cr-side{grid-column:8 / span 5}
-.cr-copy{padding-top:28px;display:flex;flex-direction:column;gap:18px}
-.cr-copy h3{font:500 clamp(1.5rem,2.4vw,2rem)/1.1 var(--disp);letter-spacing:-.025em}
-.cr-copy p{color:var(--mute);max-width:46ch}
-.uses{border-top:1px solid var(--hair)}
-.uses li{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--hair);font-size:.98rem}
-.uses li span:last-child{color:var(--mute);text-align:right}
-.drone-slot{position:relative;aspect-ratio:4/3;background:var(--ink);display:grid;place-items:center;overflow:hidden;color:#E6E9EB;border:1px solid rgba(11,18,27,.45)}
-@media (max-width:1000px){.cr-main,.cr-side{grid-column:1 / -1}.cr-side{margin-top:24px}}
-
-/* ---------- 07 contact ---------- */
-.contact h2.big{font-size:clamp(3rem,9vw,8.4rem);line-height:.94;letter-spacing:-.045em;margin-bottom:clamp(36px,5vw,72px);color:#F2F4F5}
-.contact h2.big em{font-style:normal;color:var(--acc-l)}
-.contact-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
-.contact-copy{grid-column:1 / span 4;display:flex;flex-direction:column;gap:24px}
-.contact-copy p{color:var(--mute)}
-.details{border-top:1px solid var(--hair)}
-.details li{display:flex;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--hair);font-size:.95rem}
-.details a{text-decoration:none;color:var(--acc-l);transition:color .2s var(--ease)}
-.details a:hover{color:#fff}
-form{grid-column:6 / span 7;display:grid;gap:26px}
-.field{display:grid;gap:8px}
-.field label{font:500 .8rem var(--sans);color:var(--mute)}
-.field input,.field select,.field textarea{font:400 1.05rem var(--sans);color:#F2F4F5;background:transparent;border:0;border-bottom:1px solid rgba(230,233,235,.45);border-radius:0;padding:10px 0;width:100%;appearance:none;-webkit-appearance:none;transition:border-color .25s var(--ease)}
-.field input:focus,.field select:focus,.field textarea:focus{outline:0;border-bottom-color:var(--acc-l);box-shadow:0 1px 0 var(--acc-l)}
-.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2374A6E8' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 2px center;padding-right:28px}
-.field select option{color:#0B121B;background:#fff}
-.field textarea{min-height:130px;resize:vertical}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:26px}
-.form-foot{display:flex;gap:20px 28px;align-items:center;flex-wrap:wrap}
-.form-foot .mono{flex:1;min-width:200px;color:var(--mute)}
-.form-foot a{color:var(--acc-l)}
-#status{min-height:1.4em}
-@media (max-width:900px){.contact-copy,form{grid-column:1 / -1}.row2{grid-template-columns:1fr}}
-
-footer{padding:28px var(--pad);background:var(--ink);color:rgba(230,233,235,.7);border-top:1px solid var(--hair-d)}
-footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-
-/* ---------- motion start states (only when JS runs and motion is allowed) ---------- */
-.js:not(.reduced) .wi{transform:translateY(112%)}
-.js:not(.reduced) .rule{transform:scaleX(0)}
-.js:not(.reduced) .elev .draw{stroke-dashoffset:1}
-.js:not(.reduced) .elev .win{opacity:0}
-.js:not(.reduced) [data-rise]{opacity:0;transform:translateY(24px)}
-
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{transition:none!important;scroll-behavior:auto!important}
-}
-</style>
+<link rel="stylesheet" href="/assets/css/site.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="/assets/js/site.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-
-<header class="topbar">
-  <div class="topbar-in">
-    <a class="wordmark" href="#hero" aria-label="Masterson Marketing and AI, home">
-      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2 18V2h16v16zM2 10h16M10 2v16"/></svg>Masterson Marketing &amp; AI</a>
-    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+<div class="curtain" aria-hidden="true"><svg class="" viewBox="0 0 460 470" aria-hidden="true" focusable="false"><rect x="0" y="240" width="100" height="230" rx="50" fill="#4A9EE0"/><rect x="180" y="120" width="100" height="350" rx="50" fill="#2F80ED"/><rect x="360" y="0" width="100" height="470" rx="50" fill="#F0A93B"/></svg></div>
+<header class="site-head" id="top">
+  <div class="head-in">
+    <a class="brand" href="/" aria-label="Masterson Marketing and AI Solutions, home">
+      <svg class="mark" viewBox="0 0 460 470" aria-hidden="true" focusable="false"><rect x="0" y="240" width="100" height="230" rx="50" fill="#4A9EE0"/><rect x="180" y="120" width="100" height="350" rx="50" fill="#2F80ED"/><rect x="360" y="0" width="100" height="470" rx="50" fill="#F0A93B"/></svg>
+      <span class="brand-txt"><b>MASTERSON</b><small>Marketing &amp; AI Solutions</small></span>
+    </a>
     <nav class="nav" id="nav" aria-label="Primary">
-      <ul>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#nonprofits">Nonprofits</a></li>
-        <li><a href="#creative">Creative</a></li>
-        <li><a class="cta" href="#contact">Contact</a></li>
-      </ul>
+      <ul><li><a href="/" aria-current="page">Home</a></li><li><a href="/services.html">Services</a></li><li><a href="/nonprofits.html">Nonprofits</a></li><li><a href="/creative.html">Creative</a></li><li><a href="/about.html">About</a></li><li class="nav-cta"><a class="btn btn-sm" href="/contact.html">Start a project</a></li></ul>
+      <div class="nav-extra">
+        <a href="tel:+16145800923">614-580-0923</a>
+        <a href="mailto:ryan@mastersonmarketingai.com">ryan@mastersonmarketingai.com</a>
+      </div>
     </nav>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav"><i></i><i></i><span class="sr">Open menu</span></button>
   </div>
 </header>
-
 <main id="main">
 
-  <!-- 01 HERO -->
-  <section class="hero dark" id="hero" aria-labelledby="hero-h">
-    <div class="wrap">
-      <div class="hero-meta mono">
-        <span data-type>Masterson Marketing &amp; AI Solutions LLC</span>
-        <span data-type>01 / 06 &nbsp; Columbus, Ohio</span>
-        <span class="rule" aria-hidden="true"></span>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow" data-reveal>Columbus, Ohio &middot; Businesses and nonprofits</p>
+        <h1 class="h1" data-split>Your whole marketing team, <span class="hl">one call</span> away.</h1>
+        <p class="lead" data-reveal>Social media, paid ads, search, video, drone footage, and grant writing, handled by one small team. AI does the grunt work. A person reviews everything before it goes out.</p>
+        <div class="btn-row" data-reveal>
+          <a class="btn" href="/contact.html">Start a project <span class="arr" aria-hidden="true">&rarr;</span></a>
+          <a class="btn btn-ghost" href="https://calendly.com/ryan-mastersonmarketingai" target="_blank" rel="noopener">Book a call</a>
+        </div>
+        <p class="hero-note" data-reveal>Rather talk now? Call Ryan at <a href="tel:+16145800923">614-580-0923</a>.</p>
       </div>
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <h1 id="hero-h" class="disp" data-split>
-            <span class="ln">Your new</span>
-            <span class="ln"><em>marketing</em> team.</span>
-          </h1>
-          <div class="hero-lead">
-            <p><strong>Masterson Marketing &amp; AI Solutions</strong> is full-scale marketing for for-profit businesses and nonprofits. We do the work of a whole team, with AI doing the heavy lifting, and a person reviews everything before it ships.</p>
-            <div class="hero-cta" data-rise>
-              <a class="btn" href="#contact">Start a project</a>
-              <a class="link" href="#services">See services <span aria-hidden="true">&darr;</span></a>
-            </div>
-          </div>
-        </div>
-        <div class="elev-wrap">
-          <svg class="elev" viewBox="0 0 400 570" aria-hidden="true" focusable="false"><rect class="win" x="126" y="121" width="68" height="43"/><rect class="win" x="286" y="176" width="68" height="43"/><rect class="win" x="46" y="231" width="68" height="43"/><rect class="win" x="206" y="286" width="68" height="43"/><rect class="win" x="286" y="341" width="68" height="43"/><rect class="win" x="126" y="396" width="68" height="43"/><rect class="win" x="206" y="451" width="68" height="43"/><rect class="win" x="46" y="451" width="68" height="43"/><line class="draw mast" pathLength="1" x1="200" y1="60" x2="200" y2="36"/><line class="draw ground" pathLength="1" x1="40" y1="555" x2="360" y2="555"/><line class="draw slab" pathLength="1" x1="30" y1="60" x2="370" y2="60"/><line class="draw slab" pathLength="1" x1="30" y1="115" x2="370" y2="115"/><line class="draw slab" pathLength="1" x1="30" y1="170" x2="370" y2="170"/><line class="draw slab" pathLength="1" x1="30" y1="225" x2="370" y2="225"/><line class="draw slab" pathLength="1" x1="30" y1="280" x2="370" y2="280"/><line class="draw slab" pathLength="1" x1="30" y1="335" x2="370" y2="335"/><line class="draw slab" pathLength="1" x1="30" y1="390" x2="370" y2="390"/><line class="draw slab" pathLength="1" x1="30" y1="445" x2="370" y2="445"/><line class="draw slab" pathLength="1" x1="30" y1="500" x2="370" y2="500"/><line class="draw col" pathLength="1" x1="40" y1="60" x2="40" y2="555"/><line class="draw col" pathLength="1" x1="120" y1="60" x2="120" y2="555"/><line class="draw col" pathLength="1" x1="200" y1="60" x2="200" y2="555"/><line class="draw col" pathLength="1" x1="280" y1="60" x2="280" y2="555"/><line class="draw col" pathLength="1" x1="360" y1="60" x2="360" y2="555"/><line class="draw brace" pathLength="1" x1="120" y1="60" x2="200" y2="115"/><line class="draw brace" pathLength="1" x1="200" y1="60" x2="120" y2="115"/><line class="draw brace" pathLength="1" x1="280" y1="115" x2="360" y2="170"/><line class="draw brace" pathLength="1" x1="360" y1="115" x2="280" y2="170"/><line class="draw brace" pathLength="1" x1="40" y1="170" x2="120" y2="225"/><line class="draw brace" pathLength="1" x1="120" y1="170" x2="40" y2="225"/><line class="draw brace" pathLength="1" x1="200" y1="225" x2="280" y2="280"/><line class="draw brace" pathLength="1" x1="280" y1="225" x2="200" y2="280"/><line class="draw brace" pathLength="1" x1="120" y1="335" x2="200" y2="390"/><line class="draw brace" pathLength="1" x1="200" y1="335" x2="120" y2="390"/><line class="draw brace" pathLength="1" x1="280" y1="390" x2="360" y2="445"/><line class="draw brace" pathLength="1" x1="360" y1="390" x2="280" y2="445"/><line class="draw brace" pathLength="1" x1="200" y1="500" x2="280" y2="555"/><line class="draw brace" pathLength="1" x1="280" y1="500" x2="200" y2="555"/><line class="draw brace" pathLength="1" x1="40" y1="500" x2="120" y2="555"/><line class="draw brace" pathLength="1" x1="120" y1="500" x2="40" y2="555"/></svg>
-        </div>
+      <div class="panel" data-reveal>
+        <svg class="grid-lines" viewBox="0 0 400 416" preserveAspectRatio="none" aria-hidden="true">
+          <line x1="0" y1="104" x2="400" y2="104"/><line x1="0" y1="208" x2="400" y2="208"/><line x1="0" y1="312" x2="400" y2="312"/>
+          <line x1="100" y1="0" x2="100" y2="416"/><line x1="200" y1="0" x2="200" y2="416"/><line x1="300" y1="0" x2="300" y2="416"/>
+        </svg>
+        <div class="panel-top"><span class="live">Taking new projects</span><span>Columbus <span data-clock></span></span></div>
+        <svg class="big-mark" viewBox="0 0 460 470" aria-hidden="true" focusable="false"><rect x="0" y="240" width="100" height="230" rx="50" fill="#4A9EE0"/><rect x="180" y="120" width="100" height="350" rx="50" fill="#2F80ED"/><rect x="360" y="0" width="100" height="470" rx="50" fill="#F0A93B"/></svg>
+        <span class="base" aria-hidden="true"></span>
+        <div class="panel-foot"><div><b>Ryan Masterson</b>Founder</div><a class="tlink" href="/about.html" style="color:inherit">About us</a></div>
       </div>
     </div>
   </section>
 
-  <!-- STATS: only facts about how the business works. No invented results. -->
-  <div class="stats">
-    <div class="stats-in" role="list" aria-label="At a glance">
-      <div class="stat" role="listitem"><span class="n"><span data-count="8">8</span></span><span class="mono">Services under one roof</span></div>
-      <div class="stat" role="listitem"><span class="n"><span data-count="3">3</span></span><span class="mono">Steps: brief, build, ship</span></div>
-      <div class="stat" role="listitem"><span class="n"><span data-count="100">100</span>%</span><span class="mono">Of work reviewed by a person</span></div>
-      <div class="stat" role="listitem"><span class="n">[X%]</span><span class="mono">[ Placeholder: add a real client result ]</span></div>
-    </div>
-  </div>
-  <div class="logos">
-    <div class="logos-in">
-      <p class="mono">[ CLIENT LOGOS ]</p>
-      <ul aria-label="Client logo placeholders">
-        <!-- Replace each li with <img src="..." alt="Client name" loading="lazy" width="" height=""> -->
-        <li>[CLIENT NAME]</li><li>[CLIENT NAME]</li><li>[CLIENT NAME]</li><li>[CLIENT NAME]</li>
-      </ul>
+  <div class="ticker" aria-label="Services">
+    <div class="ticker-track">
+      <ul><li>Social media management</li><li>Meta Ads</li><li>Google Ads</li><li>SEO</li><li>Ad creative</li><li>Drone filming</li><li>Grant writing</li><li>Donor relationships</li><li>Curriculum writing</li></ul>
+      <ul aria-hidden="true"><li>Social media management</li><li>Meta Ads</li><li>Google Ads</li><li>SEO</li><li>Ad creative</li><li>Drone filming</li><li>Grant writing</li><li>Donor relationships</li><li>Curriculum writing</li></ul>
     </div>
   </div>
 
-  <!-- 02 SERVICES -->
-  <section id="services" aria-labelledby="svc-h">
+  <section class="sec">
     <div class="wrap">
-      <div class="sec-head">
-        <h2 id="svc-h" class="disp h2" data-split>What we do</h2>
-        <p class="mono" data-type>02 / 06 &nbsp; Services</p>
-        <span class="rule" aria-hidden="true"></span>
+      <div class="shead">
+        <h2 class="h h2" data-split>Two kinds of clients. One team.</h2>
+        <p class="lead" data-reveal>Most of our work is for local businesses that need to be seen, and nonprofits that need to be funded. Pick the one that sounds like you.</p>
       </div>
-      <div class="audience">
-        <div data-rise>
-          <p class="mono">For-profit businesses</p>
-          <p>Social media, paid ads, search, and creative and aerial production, handled by one team so your campaigns look and sound like the same company.</p>
-        </div>
-        <div data-rise>
-          <p class="mono">Nonprofits</p>
-          <p>The same marketing and creative work, plus grant discovery and writing, donor and foundation relationships, and program curriculum.</p>
-        </div>
+      <div class="aud">
+        <a class="aud-card" href="/services.html">
+          <span class="go" aria-hidden="true">&rarr;</span>
+          <span class="tag">For businesses</span>
+          <h3 class="h h2">Get found. Get calls.</h3>
+          <p>Social media, Meta and Google ads, SEO, and the video to run with them. One team, so every campaign sounds like the same company.</p>
+          <ul><li>Social media</li><li>Meta Ads</li><li>Google Ads</li><li>SEO</li><li>Ad creative</li><li>Drone</li></ul>
+        </a>
+        <a class="aud-card" href="/nonprofits.html">
+          <span class="go" aria-hidden="true">&rarr;</span>
+          <span class="tag">For nonprofits</span>
+          <h3 class="h h2">Find the money. Tell the story.</h3>
+          <p>Grant discovery and writing, donor and foundation relationships, program curriculum, plus all the same marketing work.</p>
+          <ul><li>Grant discovery</li><li>Grant writing</li><li>Donors</li><li>Curriculum</li></ul>
+        </a>
       </div>
-      <ul class="svc-list">
-        <li class="grp"><span class="mono">Marketing <span class="muted">/ businesses and nonprofits</span></span></li>
-        <li><article class="svc">
-          <span class="n mono">01</span>
-          <h3>Social media management</h3>
-          <p>We run your social accounts: planning the content calendar, writing and designing posts, shooting and editing short video, scheduling, and answering comments and messages. AI drafts captions and options; a person approves every post and handles the conversations.</p>
-          <span class="tags mono">Content planning<br>Posting<br>Community</span>
-        </article></li>
-        <li><article class="svc">
-          <span class="n mono">02</span>
-          <h3>Meta Ads</h3>
-          <p>We build and run your Facebook and Instagram campaigns, from the creative to the audience setup. AI drafts the ad variations; a person picks what runs and watches the numbers.</p>
-          <span class="tags mono">Facebook<br>Instagram<br>Paid social</span>
-        </article></li>
-        <li><article class="svc">
-          <span class="n mono">03</span>
-          <h3>Google Ads</h3>
-          <p>We set up search, display, and performance campaigns around what people type when they are ready to buy. AI helps with keyword research and ad copy; a person owns the budget and the bidding.</p>
-          <span class="tags mono">Search<br>Display<br>Performance</span>
-        </article></li>
-        <li><article class="svc">
-          <span class="n mono">04</span>
-          <h3>SEO</h3>
-          <p>We find what keeps your site off the first page and plan content people really search for. AI speeds up the research and first drafts; a person edits everything before it is published.</p>
-          <span class="tags mono">Search visibility<br>Content strategy</span>
-        </article></li>
-        <li class="grp"><span class="mono">Creative production <span class="muted">/ businesses and nonprofits</span></span><a class="mono" href="#creative">See the creative <span aria-hidden="true">&darr;</span></a></li>
-        <li><article class="svc">
-          <span class="n mono">05</span>
-          <h3>Creative ad production</h3>
-          <p>We make the creative for your ads: filming, video editing, and audio editing. One team handles the shoot through the final cut, so nothing gets lost between vendors.</p>
-          <span class="tags mono">Filming<br>Video editing<br>Audio editing</span>
-        </article></li>
-        <li><article class="svc">
-          <span class="n mono">06</span>
-          <h3>Drone filming</h3>
-          <p>We capture aerial footage for ads, events, and real estate, and edit it to drop straight into your campaign or listing. It works best next to the ground footage from the same shoot.</p>
-          <span class="tags mono">Ads<br>Events<br>Real estate</span>
-        </article></li>
-        <li class="grp"><span class="mono">Nonprofit funding and programs <span class="muted">/ nonprofits</span></span><a class="mono" href="#nonprofits">See nonprofit services <span aria-hidden="true">&darr;</span></a></li>
-        <li><article class="svc">
-          <span class="n mono">07</span>
-          <h3>Nonprofit grant writing and discovery</h3>
-          <p>We find grants your organization qualifies for, then write the applications. AI does the searching and first drafts; a person reviews every line before it is submitted.</p>
-          <span class="tags mono">Grant discovery<br>Grant writing</span>
-        </article></li>
-        <li><article class="svc">
-          <span class="n mono">08</span>
-          <h3>Curriculum writing</h3>
-          <p>We write program and youth curricula: lesson plans, activities, and facilitator guides. AI builds the first pass; a person checks it for age fit and accuracy.</p>
-          <span class="tags mono">Program curricula<br>Youth curricula</span>
-        </article></li>
-        <li><article class="svc cta">
-          <span class="n mono">+</span>
-          <h3>Not sure what you need?</h3>
-          <p>Most projects mix two or three of these. Send a few lines and we will tell you what makes sense.</p>
-          <a class="link" href="#contact">Start a project <span aria-hidden="true">&rarr;</span></a>
-        </article></li>
-      </ul>
     </div>
   </section>
 
-  <!-- 03 PROCESS -->
-  <section class="dark" id="process" aria-labelledby="proc-h">
+  <section class="sec ink">
     <div class="wrap">
-      <div class="sec-head">
-        <h2 id="proc-h" class="disp h2" data-split>How the AI team works</h2>
-        <p class="mono" data-type>03 / 06 &nbsp; Process</p>
-        <span class="rule" aria-hidden="true"></span>
+      <div class="shead">
+        <h2 class="h h2" data-split>How the work actually gets done</h2>
+        <p class="lead" data-reveal>Three steps. AI handles the typing and sorting so the people on your project can spend their time on judgment.</p>
       </div>
       <ol class="steps">
-        <li class="step">
-          <div class="num">01</div>
-          <div class="body"><h3>Brief</h3><p>You tell us the goal, the budget, and what is off limits. We turn that into a written plan you can read and correct before any work starts.</p></div>
-          <div class="split">
-            <div><span class="mono">AI does</span>Summarizes what you send us and researches your market and competitors.</div>
-            <div><span class="mono">A person does</span>Reads the plan, fixes what is wrong, and signs off with you.</div>
-          </div>
+        <li class="track" aria-hidden="true"><span></span></li>
+        <li class="step" data-reveal>
+          <span class="num">1</span><h3>Brief</h3>
+          <p>You tell us the goal, the budget, and what is off limits. We write it up as a plan you can read and correct before any work starts.</p>
+          <div class="who"><div><b>AI</b>Summarizes what you send and researches your market.</div><div><b>A person</b>Fixes what is wrong and signs off with you.</div></div>
         </li>
-        <li class="step">
-          <div class="num">02</div>
-          <div class="body"><h3>Build</h3><p>Social posts, ad copy, keyword lists, grant language, rough cuts. This is where the AI does the bulk of the typing and sorting, so the humans can spend time on judgment.</p></div>
-          <div class="split">
-            <div><span class="mono">AI does</span>Produces first drafts and options, fast.</div>
-            <div><span class="mono">A person does</span>Rewrites, fact-checks, and throws out whatever is not good enough.</div>
-          </div>
+        <li class="step" data-reveal>
+          <span class="num">2</span><h3>Build</h3>
+          <p>Posts, ad copy, keyword lists, grant language, rough cuts. First drafts come fast. Good drafts take a person.</p>
+          <div class="who"><div><b>AI</b>Produces first drafts and options.</div><div><b>A person</b>Rewrites, fact-checks, and cuts what is not good enough.</div></div>
         </li>
-        <li class="step">
-          <div class="num">03</div>
-          <div class="body"><h3>Ship</h3><p>We launch, then keep watching. Campaigns get adjusted, applications get submitted, and finished video and audio get delivered.</p></div>
-          <div class="split">
-            <div><span class="mono">AI does</span>Flags changes in performance and drafts report summaries.</div>
-            <div><span class="mono">A person does</span>Reviews everything before it goes live and reads every report before you see it.</div>
-          </div>
+        <li class="step" data-reveal>
+          <span class="num">3</span><h3>Ship</h3>
+          <p>We launch, then keep watching. Campaigns get adjusted, applications get submitted, video gets delivered.</p>
+          <div class="who"><div><b>AI</b>Flags changes in performance and drafts reports.</div><div><b>A person</b>Reads every report before you see it.</div></div>
         </li>
       </ol>
-      <p class="honest" data-rise>AI is a tool we use, not a replacement for judgment. A person reviews all work before it reaches you or goes public.</p>
     </div>
   </section>
 
-  <!-- 04 CREATIVE + AERIAL -->
-  <section id="creative" aria-labelledby="reel-h">
+  <section class="sec">
     <div class="wrap">
-      <div class="sec-head">
-        <h2 id="reel-h" class="disp h2" data-split>Creative and aerial</h2>
-        <p class="mono" data-type>04 / 06 &nbsp; Creative</p>
-        <span class="rule" aria-hidden="true"></span>
+      <p class="eyebrow">The rule we work by</p>
+      <p class="statement">AI is a tool we use, not a replacement for judgment. A person reviews all work before it reaches you or goes public.</p>
+      <p class="statement-by" data-reveal><svg class="mark" viewBox="0 0 460 470" aria-hidden="true" focusable="false"><rect x="0" y="240" width="100" height="230" rx="50" fill="#4A9EE0"/><rect x="180" y="120" width="100" height="350" rx="50" fill="#2F80ED"/><rect x="360" y="0" width="100" height="470" rx="50" fill="#F0A93B"/></svg> Ryan Masterson, Founder</p>
+    </div>
+  </section>
+
+  <section class="sec ink">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">Creative and aerial</p>
+        <h2 class="h h2" data-split>We shoot it, cut it, and put it in your ads.</h2>
+        <p class="lead" data-reveal style="margin-block:22px 30px">Filming, editing, audio, and drone footage from the same crew that runs your campaigns. Nothing gets lost between vendors.</p>
+        <a class="btn" href="/creative.html" data-reveal>See creative services <span class="arr" aria-hidden="true">&rarr;</span></a>
       </div>
-      <p class="cr-lead">We make the creative for your ads, and we film it from the ground and the air. One team runs the shoot through the final cut, so your ads, events, and listings look like they came from the same place.</p>
-      <div class="cr-grid">
-        <div class="cr-main">
-          <figure class="reel-frame" data-reel>
-            <!--
-              REPLACE THIS DIV with your reel. Examples:
-              <video controls preload="none" poster="reel-poster.jpg" playsinline><source src="reel.mp4" type="video/mp4"></video>
-              <iframe src="https://player.vimeo.com/video/ID" title="Masterson reel" loading="lazy" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
-            -->
-            <div class="reel-slot" role="img" aria-label="Placeholder for the creative reel video. No video has been added yet.">
-              <svg viewBox="0 0 160 90" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-                <rect x="53.3" width="53.4" height="45" fill="#17479A" fill-opacity=".28"/>
-                <rect y="45" width="53.3" height="45" fill="#17479A" fill-opacity=".14"/>
-                <path d="M53.3 0V90M106.7 0V90M0 45H160" stroke="#9AA7B5" stroke-opacity=".6" stroke-width="1" vector-effect="non-scaling-stroke" fill="none"/>
-              </svg>
-              <div class="slot-label"><b>[ REEL / VIDEO EMBED ]</b><span class="mono">Placeholder. Drop the video here.</span></div>
-            </div>
-          </figure>
-          <div class="cr-copy">
-            <h3>Ad creative</h3>
-            <p>Filming, video editing, and audio editing for your ads. AI helps with rough cuts, captions, and cleanup; a person makes the creative decisions and signs off on the final cut.</p>
-            <ul class="uses" aria-label="Ad creative services">
-              <li><span>Filming</span><span>On location or in studio</span></li>
-              <li><span>Video editing</span><span>Ads, social cuts, recaps</span></li>
-              <li><span>Audio editing</span><span>Cleanup and mixing</span></li>
-            </ul>
-          </div>
-        </div>
-        <div class="cr-side">
-          <figure class="drone-slot" data-rise>
-            <svg viewBox="0 0 160 120" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-              <rect x="53.3" y="60" width="53.4" height="60" fill="#17479A" fill-opacity=".28"/>
-              <rect width="53.3" height="60" fill="#17479A" fill-opacity=".14"/>
-              <path d="M53.3 0V120M106.7 0V120M0 60H160" stroke="#9AA7B5" stroke-opacity=".6" stroke-width="1" vector-effect="non-scaling-stroke" fill="none"/>
-            </svg>
-            <div class="slot-label" role="img" aria-label="Placeholder for drone footage or photo. Nothing has been added yet."><b>[ DRONE REEL / PHOTO ]</b><span class="mono">Placeholder. Replace with aerial footage.</span></div>
-          </figure>
-          <div class="cr-copy">
-            <h3>Aerial and on location</h3>
-            <p>Some shots only work from above. We fly, capture, and edit aerial footage for ads, events, and property listings, and we film on location when the story needs to happen where it happens.</p>
-            <ul class="uses" aria-label="Where aerial footage is used">
-              <li><span>Ads</span><span>Campaign video</span></li>
-              <li><span>Events</span><span>Coverage and recaps</span></li>
-              <li><span>Real estate</span><span>Listings and tours</span></li>
-            </ul>
-            <p class="mono muted">[ FAA PART 107 / INSURANCE: CONFIRM AND ADD DETAILS ]</p>
-          </div>
-        </div>
-      </div>
-      <div class="reel-note mono">
-        <span>[CLIENT NAME] / [PROJECT TYPE] / [YEAR]</span>
-        <a class="link" href="#contact">Book a shoot <span aria-hidden="true">&rarr;</span></a>
+      <div class="vf" data-reveal aria-hidden="true">
+        <div class="glow"></div><div class="thirds"></div><div class="horizon"></div>
+        <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
+        <span class="focus"></span>
+        <div class="hud top"><span class="rec">REC</span><span data-timecode>00:00:00:00</span></div>
+        <div class="hud bot"><span>4K &middot; 24 FPS</span><span>ALT 120 FT</span></div>
       </div>
     </div>
   </section>
 
-  <!-- 05 NONPROFITS -->
-  <section class="blue" id="nonprofits" aria-labelledby="np-h">
-    <div class="wrap">
-      <div class="sec-head">
-        <h2 id="np-h" class="disp h2" data-split>Funding and programs for nonprofits</h2>
-        <p class="mono" data-type>05 / 06 &nbsp; Nonprofit practice</p>
-        <span class="rule" aria-hidden="true"></span>
-      </div>
-      <p class="np-lead">This is a practice of its own. Small teams lose weeks to grant research and application writing. We take that off your plate: find the right funders, write the applications, and build the program materials behind them. We also help you build lasting relationships with the donors and foundations in your area, because funders give to organizations they know and trust.</p>
-      <div class="np-grid">
-        <div class="np-item" data-rise>
-          <span class="mono muted">A</span>
-          <h3>Grant discovery</h3>
-          <p>We search federal, state, foundation, and corporate funding and give you a short list of grants that fit your mission, size, and location, with deadlines.</p>
-          <ul><li>Fit check</li><li>Deadline calendar</li></ul>
-        </div>
-        <div class="np-item" data-rise>
-          <span class="mono muted">B</span>
-          <h3>Grant writing</h3>
-          <p>We draft narratives, budgets, and supporting sections in your organization&rsquo;s voice. AI produces the first draft; a person edits it and checks it against the funder&rsquo;s rules.</p>
-          <ul><li>Full applications</li><li>Reviewed before you sign</li></ul>
-        </div>
-        <div class="np-item" data-rise>
-          <span class="mono muted">C</span>
-          <h3>Donor and foundation relationships</h3>
-          <p>We help you cultivate the funders near you: research who supports work like yours, prepare for introductions and meetings, and draft thank-you notes and progress updates. A person tracks the follow-ups so funders hear from you between applications.</p>
-          <ul><li>Local funder research</li><li>Meeting prep</li><li>Thank-yous and updates</li></ul>
-        </div>
-        <div class="np-item" data-rise>
-          <span class="mono muted">D</span>
-          <h3>Program curriculum</h3>
-          <p>We write the lesson plans, activities, and facilitator guides behind your programs, including youth programs, so what you promise a funder matches what you teach.</p>
-          <ul><li>Youth and program curricula</li><li>Facilitator guides</li></ul>
+  <section class="sec cta-band ">
+    <div class="wrap cta-grid">
+      <div>
+        <p class="eyebrow">Next step</p>
+        <h2 class="h h1" data-split>Tell us what you need.</h2>
+        <p class="lead" data-reveal>Send a few lines about the project. Ryan reads every message and replies with next steps, not a sales sequence.</p>
+        <div class="btn-row" data-reveal style="margin-top:30px">
+          <a class="btn" href="/contact.html">Start a project <span class="arr" aria-hidden="true">&rarr;</span></a>
         </div>
       </div>
-      <div class="np-foot">
-        <a class="btn" href="#contact">Talk about a grant</a>
-        <span class="mono">[ Nonprofit pricing / sliding scale: add details here if offered ]</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- 07 CONTACT -->
-  <section class="dark contact" id="contact" aria-labelledby="contact-h">
-    <div class="wrap">
-      <div class="sec-head" style="margin-bottom:clamp(20px,3vw,36px)">
-        <p class="mono" data-type style="grid-column:1 / -1;justify-self:start;text-align:left">06 / 06 &nbsp; Contact</p>
-        <span class="rule" aria-hidden="true"></span>
-      </div>
-      <h2 id="contact-h" class="disp big" data-split>Tell us what<br>you need. <em>Now.</em></h2>
-      <div class="contact-grid">
-        <div class="contact-copy">
-          <p>Send a few lines about the project. A person reads every message and replies with next steps, not a sales sequence.</p>
-          <ul class="details">
-            <li><span class="muted">Email</span><a href="mailto:hello@mastersonmarketingai.com">hello@mastersonmarketingai.com</a></li>
-            <li><span class="muted">Phone</span><span>[PHONE]</span></li>
-            <li><span class="muted">Studio</span><span>Columbus, Ohio</span></li>
-          </ul>
-        </div>
-
-        <!-- TODO(form-backend): Connect a form handler here (Formspree, Netlify Forms, your own API).
-             Set the form's action/method, and remove the mailto handling in the script at the bottom of this file.
-             Without JS, the form falls back to mailto: via the action attribute. -->
-        <form id="contact-form" action="mailto:hello@mastersonmarketingai.com" method="post" enctype="text/plain" data-rise>
-          <div class="row2">
-            <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
-            <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+      <div class="reach" data-reveal>
+            <a href="tel:+16145800923"><span>Call</span><span>614-580-0923</span></a>
+            <a href="mailto:ryan@mastersonmarketingai.com"><span>Email</span><span>ryan@mastersonmarketingai.com</span></a>
+            <a href="https://calendly.com/ryan-mastersonmarketingai" target="_blank" rel="noopener"><span>Calendar</span><span>Book a 30-min call &rarr;</span></a>
           </div>
-          <div class="field">
-            <label for="f-type">Project type</label>
-            <select id="f-type" name="project_type" required>
-              <option value="" selected disabled>Choose one</option>
-              <option>Social media management</option>
-              <option>Meta Ads</option>
-              <option>Google Ads</option>
-              <option>SEO</option>
-              <option>Nonprofit grant writing / discovery</option>
-              <option>Curriculum writing</option>
-              <option>Creative ad production</option>
-              <option>Drone filming</option>
-              <option>Not sure yet</option>
-            </select>
-          </div>
-          <div class="field"><label for="f-msg">Message</label><textarea id="f-msg" name="message" required></textarea></div>
-          <div class="form-foot">
-            <button class="btn" type="submit">Send it</button>
-            <p class="mono" id="status" role="status" aria-live="polite">Or email <a href="mailto:hello@mastersonmarketingai.com">hello@mastersonmarketingai.com</a></p>
-          </div>
-        </form>
-      </div>
     </div>
   </section>
 </main>
-
-<footer>
-  <div class="wrap mono">
-    <span>&copy; <span id="year">2026</span> Masterson Marketing &amp; AI Solutions LLC</span>
-    <span>Columbus, Ohio &nbsp; [PHONE]</span>
-  </div>
+<footer class="site-foot">
+  <div class="wrap">
+      <div class="foot-cta">
+        <div>
+          <p>Have a project in mind?</p>
+          <a class="foot-big" href="/contact.html">Let&rsquo;s talk it through <span class="arr" aria-hidden="true">&rarr;</span></a>
+        </div>
+        <a class="btn btn-ghost" href="https://calendly.com/ryan-mastersonmarketingai" target="_blank" rel="noopener">Book a 30-minute call</a>
+      </div>
+      <div class="foot-grid">
+        <div class="foot-brand"><svg class="mark" viewBox="0 0 460 470" aria-hidden="true" focusable="false"><rect x="0" y="240" width="100" height="230" rx="50" fill="#4A9EE0"/><rect x="180" y="120" width="100" height="350" rx="50" fill="#2F80ED"/><rect x="360" y="0" width="100" height="470" rx="50" fill="#F0A93B"/></svg><div><b>MASTERSON</b>Masterson Marketing &amp; AI Solutions LLC<br>Columbus, Ohio</div></div>
+        <div><h3>Pages</h3><ul><li><a href="/">Home</a></li><li><a href="/services.html">Services</a></li><li><a href="/nonprofits.html">Nonprofits</a></li><li><a href="/creative.html">Creative</a></li><li><a href="/about.html">About</a></li><li><a href="/contact.html">Contact</a></li></ul></div>
+        <div><h3>Reach Ryan</h3><address>
+          <a href="tel:+16145800923">614-580-0923</a>
+          <a href="mailto:ryan@mastersonmarketingai.com">ryan@mastersonmarketingai.com</a>
+          <a href="https://calendly.com/ryan-mastersonmarketingai" target="_blank" rel="noopener">Book a call</a>
+        </address></div>
+      </div>
+      <div class="foot-base"><span>&copy; <span data-year>2026</span> Masterson Marketing &amp; AI Solutions LLC</span><a href="#top">Back to top &uarr;</a></div>
+    </div>
+  <div class="foot-word" aria-hidden="true">MASTERSON</div>
 </footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-<script defer>
-window.addEventListener('DOMContentLoaded', function () {
-  var root = document.documentElement;
-  var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
-
-  /* ---- always-on bits (no GSAP needed) ---- */
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  var btn = document.querySelector('.menu-btn'), nav = document.getElementById('nav');
-  function setMenu(open){ nav.classList.toggle('open', open); btn.setAttribute('aria-expanded', open); btn.textContent = open ? 'Close' : 'Menu'; }
-  btn.addEventListener('click', function(){ setMenu(btn.getAttribute('aria-expanded') !== 'true'); });
-  nav.addEventListener('click', function(e){ if (e.target.closest('a')) setMenu(false); });
-  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') setMenu(false); });
-
-  var form = document.getElementById('contact-form'), status = document.getElementById('status');
-  form.addEventListener('submit', function (e) {
-    // TODO(form-backend): replace this mailto handoff with a fetch() to your form endpoint.
-    e.preventDefault();
-    var f = new FormData(form);
-    var body = 'Name: ' + f.get('name') + '\nEmail: ' + f.get('email') + '\nProject type: ' + f.get('project_type') + '\n\n' + f.get('message');
-    window.location.href = 'mailto:hello@mastersonmarketingai.com?subject=' + encodeURIComponent('Project inquiry: ' + f.get('project_type')) + '&body=' + encodeURIComponent(body);
-    status.textContent = 'Opening your email app. If nothing opens, email us directly at hello@mastersonmarketingai.com.';
-  });
-
-  /* ---- motion ---- */
-  if (root.classList.contains('reduced')) return;
-  if (!window.gsap || !window.ScrollTrigger) { root.classList.remove('js'); return; } // CDN failed: show everything
-
-  try {
-    gsap.registerPlugin(ScrollTrigger);
-    var SMOOTH = 'power3.out', DRAW = 'power2.inOut';
-
-    // Split headlines into masked words (line breaks preserved).
-    function split(el) {
-      el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
-      (function walk(node) {
-        Array.prototype.slice.call(node.childNodes).forEach(function (n) {
-          if (n.nodeType === 3) {
-            var frag = document.createDocumentFragment();
-            n.textContent.split(/(\s+)/).forEach(function (t) {
-              if (!t) return;
-              if (/^\s+$/.test(t)) { frag.appendChild(document.createTextNode(' ')); return; }
-              var w = document.createElement('span'); w.className = 'w'; w.setAttribute('aria-hidden', 'true');
-              var i = document.createElement('span'); i.className = 'wi'; i.textContent = t;
-              w.appendChild(i); frag.appendChild(w);
-            });
-            n.parentNode.replaceChild(frag, n);
-          } else if (n.nodeType === 1 && n.tagName !== 'BR') walk(n);
-        });
-      })(el);
-    }
-    $$('[data-split]').forEach(split);
-
-    // Typewriter for the small mono labels
-    function prepType(el) {
-      var full = el.textContent; el._full = full;
-      var vis = document.createElement('span'), hid = document.createElement('span');
-      hid.style.visibility = 'hidden'; hid.textContent = full;
-      el.textContent = ''; el.appendChild(vis); el.appendChild(hid);
-      el._vis = vis; el._hid = hid;
-    }
-    function typeIn(el, delay) {
-      var len = el._full.length, o = { n: 0 };
-      return gsap.to(o, {
-        n: len, duration: Math.min(.9, len * .02), delay: delay || 0, ease: 'steps(' + len + ')',
-        onUpdate: function () { var k = Math.round(o.n); el._vis.textContent = el._full.slice(0, k); el._hid.textContent = el._full.slice(k); },
-        onComplete: function () { el.textContent = el._full; }
-      });
-    }
-    var types = $$('[data-type]'); types.forEach(prepType);
-    var counts = $$('[data-count]');
-    counts.forEach(function (el) { el.textContent = '0'; });
-
-    // ----- LOAD SEQUENCE -----
-    var hero = $$('.hero')[0];
-    var tl = gsap.timeline();
-    tl.to($$('.hero h1 .wi'), { y: 0, duration: 1, stagger: .09, ease: 'expo.out' }, .1)
-      .to($$('.hero .rule'), { scaleX: 1, duration: 1, ease: DRAW }, 0)
-      .add(function () { types.filter(function (t) { return hero.contains(t); }).forEach(function (t, i) { typeIn(t, i * .12); }); }, .05)
-      .to($$('.hero-cta'), { opacity: 1, y: 0, duration: .8, ease: SMOOTH }, .7);
-    // The steel frame draws itself: ground, columns, slabs, bracing, then glazing
-    var elev = $$('.elev')[0];
-    tl.to($$('.elev .ground, .elev .col', elev), { strokeDashoffset: 0, duration: 1, stagger: .08, ease: DRAW }, .2)
-      .to($$('.elev .slab', elev), { strokeDashoffset: 0, duration: .9, stagger: .06, ease: DRAW }, .45)
-      .to($$('.elev .mast, .elev .brace', elev), { strokeDashoffset: 0, duration: .8, stagger: .05, ease: DRAW }, .9)
-      .to($$('.elev .win', elev), { opacity: 1, duration: .6, stagger: { each: .07, from: 'random' }, ease: 'power1.out' }, 1.2);
-    // slow drift as you leave the hero
-    gsap.to('.elev-wrap', { y: -40, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-
-    // Hairlines draw in under each header
-    $$('section:not(.hero) .rule').forEach(function (r) {
-      gsap.to(r, { scaleX: 1, duration: 1.1, ease: DRAW, scrollTrigger: { trigger: r, start: 'top 92%', once: true } });
-    });
-    $$('section:not(.hero)').forEach(function (s) {
-      var words = $$('[data-split] .wi', s);
-      if (words.length) gsap.to(words, { y: 0, duration: .9, stagger: .06, ease: 'expo.out', scrollTrigger: { trigger: words[0].closest('[data-split]'), start: 'top 88%', once: true } });
-    });
-    types.filter(function (t) { return !hero.contains(t); }).forEach(function (t) {
-      ScrollTrigger.create({ trigger: t, start: 'top 92%', once: true, onEnter: function () { typeIn(t); } });
-    });
-    $$('[data-rise]').filter(function (el) { return !hero.contains(el); }).forEach(function (el) {
-      gsap.to(el, { opacity: 1, y: 0, duration: .9, ease: SMOOTH, scrollTrigger: { trigger: el, start: 'top 90%', once: true } });
-    });
-
-    counts.forEach(function (el) {
-      var end = +el.getAttribute('data-count'), o = { v: 0 };
-      ScrollTrigger.create({ trigger: el, start: 'top 92%', once: true, onEnter: function () {
-        gsap.to(o, { v: end, duration: 1.2, ease: 'power2.out', onUpdate: function () { el.textContent = Math.round(o.v); }, onComplete: function () { el.textContent = end; } });
-      } });
-    });
-
-    // Service rows slide up in sequence, and drift slightly against the scroll
-    $$('.svc').forEach(function (row) {
-      gsap.from(row, { opacity: 0, y: 28, duration: .9, ease: SMOOTH, scrollTrigger: { trigger: row, start: 'top 92%', once: true } });
-    });
-    if (window.matchMedia('(min-width: 901px)').matches) {
-      $$('.svc h3').forEach(function (h) {
-        gsap.fromTo(h, { y: 14 }, { y: -14, ease: 'none', scrollTrigger: { trigger: h.closest('.svc'), start: 'top bottom', end: 'bottom top', scrub: .5 } });
-      });
-    }
-
-    // Reel frame eases to full size
-    var reel = $$('[data-reel]')[0];
-    if (reel) gsap.fromTo(reel, { scale: .94, transformOrigin: '50% 0%' }, { scale: 1, ease: 'none',
-      scrollTrigger: { trigger: reel, start: 'top 95%', end: 'top 40%', scrub: true } });
-
-    window.addEventListener('load', function(){ ScrollTrigger.refresh(); });
-  } catch (err) {
-    console.error('Motion failed, showing static page', err);
-    root.classList.remove('js');
-    root.classList.add('reduced');
-  }
-});
-</script>
-<noscript><style>.menu-btn{display:none}</style></noscript>
 </body>
 </html>

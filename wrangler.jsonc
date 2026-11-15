@@ -4,6 +4,8 @@
   "compatibility_date": "2026-09-18",
   "assets": {
     // The site lives at the repo root. .assetsignore keeps internal files from being served.
-    "directory": "./"
+    "directory": "./",
+    // Unknown URLs get the branded 404 page.
+    "not_found_handling": "404-page"
   }
 }
