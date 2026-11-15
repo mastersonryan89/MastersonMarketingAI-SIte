@@ -19,3 +19,6 @@ wrangler.json
 package.json
 package-lock.json
 node_modules/
+
+# Raw brand files and screenshots (the site uses copies in assets/img)
+brandassests/
